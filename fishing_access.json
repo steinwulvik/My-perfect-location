@@ -1,0 +1,51 @@
+{
+  "5328": {
+    "name": "Åmotdammen",
+    "checkedOn": "2026-11-03",
+    "drinkingWaterStatus": "not_in_use",
+    "drinkingWaterSource": "https://www.lorenskog.kommune.no/samfunnsutvikling/slik-bygger-vi-lorenskog/rehabilitering-av-amotdammen.161447.aspx",
+    "fishPresenceSource": "https://www.njff.no/akershus/ralingen/fiskeutvalget",
+    "permitUrl": "https://www.inatur.no/fiske/532e9d4fe4b0be7038a73f84/orretfiske-i-ralingsmarka",
+    "permitSource": "https://www.njff.no/akershus/ralingen/fiskeutvalget"
+  },
+  "80083": {
+    "name": "Nedre Helltjern",
+    "checkedOn": "2026-11-03",
+    "drinkingWaterStatus": "unknown_assumed_not_drinking",
+    "fishPresenceSource": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker",
+    "permitUrl": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker",
+    "permitSource": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker"
+  },
+  "3137": {
+    "name": "Øvre Helltjern",
+    "checkedOn": "2026-11-03",
+    "drinkingWaterStatus": "unknown_assumed_not_drinking",
+    "fishPresenceSource": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker",
+    "permitUrl": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker",
+    "permitSource": "https://www.inatur.no/fiske/50d2e4bce4b04b85c8956780/velkommen-til-fiskeopplevelser-i-blaker"
+  },
+  "5478": {
+    "name": "Gjersrudtjern",
+    "checkedOn": "2026-11-04",
+    "drinkingWaterStatus": "unknown",
+    "fishPresenceSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitUrl": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa"
+  },
+  "5505": {
+    "name": "Stensrudtjern",
+    "checkedOn": "2026-11-04",
+    "drinkingWaterStatus": "unknown",
+    "fishPresenceSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitUrl": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa"
+  },
+  "5411": {
+    "name": "Skraperudtjern",
+    "checkedOn": "2026-11-04",
+    "drinkingWaterStatus": "unknown",
+    "fishPresenceSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitUrl": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa",
+    "permitSource": "https://www.inatur.no/fiske/69c1b9391c4ee565bb51f02d/fiske-i-ostmarka-nasjonalpark-ofa"
+  }
+}

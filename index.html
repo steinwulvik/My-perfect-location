@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>My Perfect Location · Stedsdossier</title>
+  <link rel="preconnect" href="https://unpkg.com"><link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <style>
+    :root{--ink:#14362f;--muted:#667d76;--paper:#f5f7f2;--card:#fff;--line:#e1e9e2;--green:#1d6d57;--lime:#d5f37d;--blue:#eaf4f6;--red:#a84838;--gold:#a66b1e;--shadow:0 12px 32px #183c3010}
+    *{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}button,input{font:inherit}button{cursor:pointer}a{color:var(--green)}.page{max-width:1480px;margin:auto;padding:30px 34px 42px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:-.03em;font-size:18px}.brandmark{width:38px;height:38px;border-radius:14px;background:var(--lime);display:grid;place-items:center;font-size:21px}.top-right{font-size:12px;color:var(--muted)}.hero{display:grid;grid-template-columns:1fr auto;align-items:end;gap:20px;margin:28px 0 20px}.eyebrow{text-transform:uppercase;font-size:10px;letter-spacing:.16em;font-weight:800;color:var(--green)}h1{font-size:clamp(32px,4vw,52px);line-height:1.02;letter-spacing:-.055em;margin:9px 0 12px;max-width:780px}.hero p{color:var(--muted);max-width:650px;margin:0}.pill{background:#e7efe9;padding:8px 12px;border-radius:999px;color:var(--green);font-size:11px;font-weight:700;white-space:nowrap}.searchbox{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;box-shadow:var(--shadow);margin-bottom:17px}.searchrow{display:flex;gap:10px}.searchrow input{flex:1;min-width:0;background:#f7faf7;border:1px solid var(--line);border-radius:12px;padding:13px 15px;color:var(--ink);outline:none}.searchrow input:focus{border-color:#8bb5a6;box-shadow:0 0 0 3px #1d6d5710}.btn{border:0;background:var(--ink);color:white;border-radius:12px;padding:0 20px;font-weight:700}.btn:hover{background:#245647}.hint{color:var(--muted);font-size:11px;margin:9px 2px 0}.suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.suggestion{border:1px solid var(--line);background:#fff;border-radius:11px;padding:8px 10px;text-align:left;color:var(--ink);font-size:11px;max-width:100%}.suggestion:hover{border-color:var(--green)}.hidden{display:none!important}.grid{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:15px}.card{background:linear-gradient(145deg,#fff 0%,#f4fafb 100%);border:1px solid var(--line);border-radius:19px;padding:19px;box-shadow:var(--shadow);min-width:0}.card h2{font-size:15px;margin:0 0 3px;letter-spacing:-.02em}.sub{font-size:11px;color:var(--muted)}.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:14px}.tiny-pill{font-size:10px;border-radius:30px;background:#edf4ef;color:var(--green);padding:5px 9px;white-space:nowrap}.map-card{grid-column:span 2;padding:0;overflow:hidden;min-height:445px}.map-top{padding:18px 20px 12px}.map-top h2{margin:0}.map-area{height:360px;background:#e5eee8}.map-foot{display:flex;justify-content:space-between;padding:9px 18px;color:var(--muted);font-size:10px}.map-legend{display:flex;gap:14px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:#29785f}.dot.blue{background:#4d9abc}.dot.gold{background:#c18b35}.summary{background:#153d33;color:white;border-radius:19px;padding:20px;box-shadow:var(--shadow);min-height:186px}.summary .eyebrow{color:var(--lime)}.summary h2{font-size:20px;margin:8px 0 9px;letter-spacing:-.03em}.summary p{color:#e2eee8;font-size:13px;margin:0}.plusminus{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}.plusminus div{border-radius:12px;padding:11px;background:#ffffff12}.plusminus strong{display:block;color:var(--lime);font-size:11px;margin-bottom:3px}.plusminus span{font-size:11px;color:#ecf3ee}.wide{grid-column:span 2}.weather-chart{width:100%;height:190px;display:block}.weather-legend{font-size:10px;color:var(--muted);display:flex;gap:15px}.weather-legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px}.metricrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.metric{background:#f0f6f4;border-radius:12px;padding:10px}.metric b{display:block;font-size:15px}.metric small{font-size:10px;color:var(--muted)}.mini{border:1px solid var(--line);background:white;border-radius:11px;padding:8px 11px;color:var(--green);font-size:10px;font-weight:700;text-decoration:none;display:inline-block}.risklist{display:grid;gap:9px}.risk{padding:10px 11px;border-radius:12px;background:#f4f7f5;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:12px}.risk strong{font-size:12px}.risk span{color:var(--muted);font-size:10px}.risk--green{background:#edf7ef;border:1px solid #d4ead8}.risk--orange{background:#fff5e7;border:1px solid #f2dfbd}.risk--red{background:#fff0ed;border:1px solid #f0d3cc}.risk-label{display:flex;align-items:center;gap:7px}.risk-flag{width:9px;height:13px;display:inline-block;clip-path:polygon(0 0,100% 0,100% 72%,50% 52%,0 72%);background:currentColor;flex:none}.risk--green .risk-flag{color:#318354}.risk--orange .risk-flag{color:#cf862b}.risk--red .risk-flag{color:#c34836}.risk--green strong{color:#276b42}.risk--orange strong{color:#96601b}.risk--red strong{color:#a33f30}.risk strong{font-size:12px}.risk span{color:var(--muted);font-size:10px}.risk-source{align-self:center;margin-left:auto;font-size:10px;font-weight:700;white-space:nowrap;text-decoration:none;color:var(--green)}.risk-source:hover{text-decoration:underline}.status{color:var(--muted);font-size:11px;padding:10px 2px;min-height:32px}.lake-name{font-size:20px;font-weight:800;letter-spacing:-.03em;margin:9px 0 3px}.callout{background:#fff8e9;border:1px solid #f1dfb8;border-radius:11px;padding:10px;color:#7d5a22;font-size:11px;margin-top:11px}.cabin{border-radius:13px;background:#f3f7f3;padding:12px;margin:11px 0}.cabin-title{font-weight:750;font-size:13px}.cabin-meta{font-size:10px;color:var(--muted);margin-top:3px}.date-row{display:flex;align-items:center;gap:8px;margin:12px 0}.date-row input{padding:7px 8px;border:1px solid var(--line);border-radius:9px;font-size:11px}.footer{color:var(--muted);font-size:10px;margin-top:18px;display:flex;justify-content:space-between;gap:18px}.source-links{display:flex;gap:12px;flex-wrap:wrap}.source-links a{font-size:10px}.disclaimer{max-width:800px}.leaflet-popup-content-wrapper{border-radius:12px}.leaflet-popup-content{font-size:12px}
+    @media(max-width:980px){.page{padding:22px}.grid{grid-template-columns:1fr 1fr}.map-card{grid-column:span 2}.summary{grid-column:span 2}.wide{grid-column:span 2}}
+    @media(max-width:620px){.page{padding:16px}.top{margin-bottom:20px}.hero{grid-template-columns:1fr;gap:12px}.grid{grid-template-columns:1fr}.map-card,.summary,.wide{grid-column:span 1}.map-card{min-height:390px}.map-area{height:305px}.searchrow{flex-direction:column}.btn{padding:12px}.footer{flex-direction:column}.card{padding:16px}}
+
+    .water-columns{display:grid;grid-template-columns:1fr 1fr;gap:20px}.water-columns h3{font-size:13px;margin:0 0 12px}.water-list{display:grid;gap:10px}.water-item{border:1px solid #dce9eb;border-radius:13px;background:#edf7fa;padding:13px}.water-item header{display:flex;justify-content:space-between;gap:10px}.water-item h4{font-size:13px;margin:0}.water-item p{font-size:11px;margin:8px 0;color:var(--muted)}.water-distance{font-size:10px;white-space:nowrap;color:var(--muted)}.water-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.water-actions button{font-size:11px;border:0;background:none;padding:0;color:var(--green);font-weight:700}.water-actions a,.fish-record{font-size:11px}.water-about{margin-top:16px;border-top:1px solid var(--line);padding-top:12px;font-size:11px;color:var(--muted)}.water-about summary{cursor:pointer;color:var(--green);font-weight:700}.water-empty{font-size:12px;color:var(--muted);padding:12px;background:#f0f6f7;border-radius:12px}@media(max-width:620px){.water-columns{grid-template-columns:1fr}}
+
+    .card,.searchbox{background:#d5e8f5;border-color:#b9d4e6}
+    .water-item,.metric,.cabin,.water-empty{background:#fff;border-color:#e1e9e2}
+    .risk:not(.risk--green):not(.risk--orange):not(.risk--red){background:#fff}
+    .searchrow input,.suggestion,.mini,.date-row input{background:#fff;border-color:#e1e9e2}
+    .fish-dropdown{margin:10px 0;border:1px solid #d5dfe3;border-radius:9px;background:#fff}.fish-dropdown summary{cursor:pointer;padding:9px 11px;font-size:12px;font-weight:700;color:var(--ink)}.fish-options{padding:0 11px 10px;display:grid;gap:6px}
+    .fish-species{border-top:1px solid var(--line)}.fish-species>summary{font-size:12px;padding:9px 0}.fish-bio figure{margin:0 0 10px}.fish-bio img{width:100%;max-height:200px;object-fit:contain;background:#f8fafb;border-radius:8px}.fish-bio figcaption{font-size:9px;color:var(--muted);overflow-wrap:anywhere}.fish-bio p{font-size:12px;line-height:1.55}.fish-bio{padding:0 0 12px;font-size:11px}
+    .water-heading{display:flex;align-items:center;gap:10px;margin-bottom:12px}.water-heading h3{margin:0;font-size:13px}.water-heading label{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}.water-heading input{box-sizing:content-box;width:calc(3ch + 18px);padding:5px 4px;border:1px solid #b9d4e6;border-radius:7px;background:white;color:var(--ink);font:inherit;font-variant-numeric:tabular-nums;text-align:center;appearance:auto}.water-heading input::-webkit-inner-spin-button,.water-heading input::-webkit-outer-spin-button{opacity:1}
+    .water-item>summary.water-toggle{display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none}.water-toggle::-webkit-details-marker{display:none}.water-toggle::before{content:'▸';font-size:12px;color:var(--green);flex:0 0 10px;width:10px}.water-item[open]>.water-toggle::before{content:'▾'}.water-name{font-size:13px;font-weight:700;min-width:0}.water-toggle .water-distance{margin-left:auto}.water-details{padding-top:6px;padding-left:19px}.water-item[open]>.water-details{display:flex;flex-direction:column;min-height:82px}.water-details>.fish-dropdown{margin:0 0 8px}.water-details>.water-actions{margin-top:auto;padding-top:10px}.water-toggle:focus-visible{outline:2px solid var(--green);outline-offset:4px;border-radius:3px}
+    .nearby-card .water-heading h3{font-size:13px}.nearby-options{border:0;padding:0;margin:0 0 16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.nearby-options legend{margin-bottom:8px}.nearby-option{display:flex;align-items:center;gap:6px;min-width:0;background:#fff;border-radius:9px;padding:8px;font-size:11px;cursor:pointer}.nearby-option input{margin:0;accent-color:var(--green);flex:none}.nearby-count{margin-left:auto;font-size:10px;color:var(--muted)}
+    .nearby-place{margin:8px 0;padding:10px;border-color:#e1e9e2}.nearby-place .water-name{font-size:12px}.nearby-place>.water-details{min-height:0}
+    .cabin-card .water-item[open]>.water-details{min-height:0}
+    .cabin-loading{display:flex;align-items:center;gap:12px;padding:18px 14px;background:#fff;border-radius:13px;min-height:92px}.cabin-loading strong{display:block;font-size:12px}.cabin-loading small{display:block;margin-top:4px;font-size:11px;color:var(--muted)}.cabin-spinner{width:26px;height:26px;flex:none;border:3px solid #d5e8f5;border-top-color:var(--green);border-radius:50%;animation:cabin-spin .9s linear infinite}@keyframes cabin-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){.cabin-spinner{animation:none}}
+    .nearby-card,.hazard-card,.water-card,.cabin-card{display:flex;flex-direction:column}.card-source{margin-top:auto;padding-top:24px;margin-bottom:-9px;text-align:left;font-size:9px;line-height:1.4}.water-heading{flex-wrap:wrap}.water-heading h2{margin:0}.water-columns h2{font-size:15px}.water-columns>section{min-width:0}.grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media(min-width:981px){.map-card{grid-column:span 3}.nearby-card{grid-column:span 2}.nearby-options{grid-template-columns:repeat(3,minmax(0,1fr))}}
+    @media(min-width:621px) and (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cabin-card{grid-column:span 2}}
+    @media(max-width:620px){.grid{grid-template-columns:minmax(0,1fr)}}
+    .compact-results{background:#fff;border:1px solid var(--line);border-radius:13px;padding:4px 12px;overflow:hidden}.compact-category+.compact-category{border-top:1px solid var(--line)}.compact-category>summary{cursor:pointer;padding:10px 0;font-size:13px;font-weight:700}.compact-category-list{padding-bottom:5px}.compact-result{display:flex;align-items:center;gap:12px;padding:9px 0;font-size:12px}.compact-result+.compact-result{border-top:1px solid #edf1ee}.compact-name{font-weight:700;flex:1;min-width:0;overflow-wrap:anywhere}.compact-result button{border:0;padding:0;background:none;color:var(--green);font:inherit;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap}.compact-result a{font-size:11px;white-space:nowrap}.compact-result .water-distance{flex:none}@media(min-width:981px){.water-card,.cabin-card{grid-column:span 3}}@media(max-width:620px){.cabin-card .compact-result{flex-wrap:wrap}.cabin-card .compact-name{flex-basis:calc(100% - 70px)}.compact-result{gap:9px}}
+    .map-wrap{position:relative}.route-panel{position:absolute;top:12px;right:12px;z-index:1000;width:min(370px,calc(100% - 65px));background:#fff;padding:14px;border-radius:12px;box-shadow:0 3px 18px #0003;font-size:12px;max-height:calc(100% - 24px);overflow:auto}.route-title{display:flex;justify-content:space-between;align-items:center}.route-title button{border:0;background:none;font-size:24px;line-height:1}.route-panel fieldset{border:0;padding:8px 0;margin:5px 0;display:flex;flex-wrap:wrap;gap:10px}.route-panel legend{font-size:11px;font-weight:700}.route-panel label{display:flex;gap:3px;align-items:center;cursor:pointer}.route-panel input{accent-color:var(--green)}#routeSteps{padding-left:20px;max-height:150px;overflow:auto}#routeSteps:empty{display:none}#routeSteps li{margin-bottom:7px}#routeSource{margin-top:14px;font-size:9px;line-height:1.4}.map-wrap.route-open .map-area{height:570px}.water-inline-actions{display:inline-flex;align-items:center;gap:10px;font-size:11px}.water-inline-actions button{border:0;padding:0;background:none;color:var(--green);font:inherit;font-weight:700;cursor:pointer;white-space:nowrap}.water-inline-actions a{white-space:nowrap}.water-card .water-toggle{flex-wrap:wrap}.water-card .fish-dropdown{border:0;box-shadow:none}.water-card .fish-dropdown>summary{padding:5px 0}.bathing-data p{margin:2px 0}.water-card .water-item[open]>.water-details{min-height:0}
+    .compact-result button,.water-inline-actions button,.water-actions button{font-weight:400}.compact-result .official-website{font-size:12px;text-decoration:underline;white-space:normal}
+    .route-title{cursor:grab;touch-action:none;user-select:none;gap:12px;min-height:28px}.route-title:active{cursor:grabbing}.route-title:focus-visible{outline:2px solid var(--green);outline-offset:3px}.route-window-actions{display:flex;gap:10px;align-items:center}.route-title button{cursor:pointer;min-width:26px;min-height:26px}.route-panel.route-minimized{width:235px;max-width:calc(100% - 24px);padding:8px 12px}.route-minimized>:not(.route-title){display:none!important}.route-show{position:absolute;bottom:14px;left:14px;z-index:1000;background:white;color:var(--ink);border:1px solid var(--line);border-radius:9px;padding:9px 12px;box-shadow:0 2px 10px #0002;font-size:12px}
+    .fish-bio>.sub:last-child{margin-top:12px;font-size:9px;line-height:1.4}
+    .view-switch{display:flex;gap:6px;margin:0 0 16px}.view-switch button{border:1px solid #b9d4e6;background:white;color:var(--ink);padding:10px 16px;border-radius:10px;font-weight:700}.view-switch button[aria-pressed="true"]{background:var(--ink);color:white}.compare-setup{margin-bottom:16px}.compare-heading{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:14px;flex-wrap:wrap}.compare-heading p{margin:4px 0 0}.compare-addresses{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-bottom:12px}.compare-address{background:white;padding:13px;border-radius:12px;min-width:0}.compare-address-title{display:flex;justify-content:space-between;align-items:center;font-size:12px;margin-bottom:8px}.compare-remove{border:0;background:none;font-size:21px}.compare-address form{display:flex;gap:5px}.compare-address input{min-width:0;flex:1;border:1px solid var(--line);border-radius:7px;padding:8px;font-size:12px}.compare-address form button{border:0;border-radius:7px;background:var(--green);color:white;padding:7px 10px;font-size:12px}.compare-choice{font-size:11px;color:var(--muted);margin-top:8px;max-height:160px;overflow:auto}.compare-choice button{display:block;border:1px solid var(--line);border-radius:6px;background:#f5f9f7;text-align:left;padding:7px;width:100%;margin:4px 0;color:var(--ink);font-size:11px}.compare-settings{display:flex;gap:18px;flex-wrap:wrap;margin:18px 0 12px}.compare-settings label{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700}.compare-settings input{width:62px;padding:6px;border:1px solid #b9d4e6;border-radius:7px;background:white;font-size:12px}.compare-categories summary{font-size:12px;cursor:pointer;color:var(--green);margin-bottom:8px}.compare-toolbar{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12px}.compare-toolbar .btn{padding:11px 16px}#compareStatus{color:var(--muted);font-size:11px}.compare-result-card{grid-column:1/-1}.comparison-mode .searchbox,.comparison-mode .grid>.card:not(.map-card):not(.compare-result-card){display:none}.compare-table-wrap{overflow:auto;max-height:75vh;border-radius:12px;border:1px solid #dce7e8;background:white}.compare-table{width:100%;border-collapse:separate;border-spacing:0;table-layout:fixed;min-width:740px;font-size:12px}.compare-table caption{text-align:left;padding:10px 12px;color:var(--muted);font-size:11px}.compare-table th,.compare-table td{text-align:left;padding:13px;vertical-align:top;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}.compare-table thead th{position:sticky;top:0;background:#eef5f9;z-index:3}.compare-table thead th:first-child{width:190px;left:0;z-index:4}.compare-table tbody th{position:sticky;left:0;background:#f5f8fa;z-index:1}.compare-table th small{display:block;font-weight:400;color:var(--muted);font-size:10px;margin-top:5px}.compare-table th button{border:0;background:none;padding:0;text-align:left;color:var(--ink);font:inherit;font-weight:700;cursor:pointer}.compare-table .compare-group th{background:#e4eef4;color:var(--green);font-size:11px;position:static}.compare-unknown{color:var(--muted);font-style:italic}.compare-summary{font-weight:600}.compare-detail-list{list-style:none;margin:12px 0 0;padding:0}.compare-detail-list li{display:flex;align-items:center;flex-wrap:wrap;gap:5px 10px;border-top:1px solid var(--line);padding:9px 0}.compare-detail-list li>span{flex-basis:100%;font-weight:600}.compare-detail-list li>small{color:var(--muted);font-size:10px}.compare-detail-list a,.compare-detail-list button{font-size:11px}.compare-detail-list button{border:0;background:none;color:var(--green);padding:0;font-weight:400}.compare-detail-list .compact-name{font-size:12px}.compare-marker span{display:grid;place-items:center;border:2px solid white;border-radius:50%;width:32px;height:32px;color:white;font-size:14px;font-weight:800;box-shadow:0 2px 8px #0004}@media(max-width:620px){.compare-table{width:850px}.compare-table thead th:first-child{width:155px}.view-switch button{font-size:12px;padding:9px}.compare-heading .tiny-pill{white-space:normal}}
+    .compare-detail-list .fish-dropdown{flex-basis:100%;border:0;margin:0}.compare-detail-list .fish-dropdown summary{padding:4px 0}
+    #compareStatus{color:var(--ink);font-weight:600}.compare-toolbar .btn:disabled{opacity:.65;cursor:wait}.compare-choice strong{display:block;color:var(--ink);margin-bottom:6px}
+    #compareRun{display:inline-flex;align-items:center;gap:9px}.search-spinner{display:inline-block;width:15px;height:15px;border:2px solid #ffffff55;border-top-color:white;border-radius:50%;animation:cabin-spin .8s linear infinite;flex:none}.address-source{display:block;flex-basis:100%;font-size:10px;color:var(--muted);padding:4px}.suggestions .suggestion{flex-basis:100%}@media(prefers-reduced-motion:reduce){.search-spinner{animation:none}}
+    .status .search-spinner{border-color:#b9d4e6;border-top-color:var(--green);vertical-align:middle;margin-right:7px}
+    .card-source,#routeSource,.fish-bio>.sub:last-child,.fish-bio figcaption{text-align:right}.map-foot{align-items:center;gap:12px;flex-wrap:wrap}.map-foot>a{margin-left:auto;font-size:9px;text-align:right}.map-legend{flex-wrap:wrap;gap:8px 15px}.map-legend>span{display:inline-flex;align-items:center;gap:5px}.category-nearby{background:#29785f}.category-fish{background:#2474c7}.category-bath{background:#1595a3}.category-hut{background:#c18b35}.category-symbol{display:grid;place-items:center;width:29px;height:29px;border:2px solid white;border-radius:50%;color:white;box-shadow:0 2px 7px #0004}.category-symbol svg{width:19px;height:19px}.legend-symbol{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;color:white}.legend-symbol svg{width:13px;height:13px}
+    .water-heading input[type="number"],.compare-settings input[type="number"]{box-sizing:content-box;width:calc(3ch + 18px);padding:5px 4px;text-align:center;font-size:11px;font-variant-numeric:tabular-nums;appearance:auto}.compare-settings input[type="number"]::-webkit-inner-spin-button{opacity:1}.compare-radius-option{display:flex;align-items:center;gap:7px}.compare-settings input[type="checkbox"]{width:auto;padding:0;margin:0;accent-color:var(--green)}.compare-settings input:disabled{opacity:.45;background:#f1f4f5}
+    .nearby-card,.hazard-card{align-self:start}.nearby-card .nearby-options{margin-bottom:0}.nearby-card #amenityList:not(:empty){margin-top:12px}.nearby-card .card-source,.hazard-card .card-source{margin-top:0;padding-top:12px}
+    .compare-table .compare-equal td{color:var(--muted);font-size:11px;background:#fafcfc}
+    .compare-choice:empty{display:none}
+    .compare-settings{gap:10px;align-items:stretch}.compare-radius-option{background:#fff;border:1px solid #e1e9e2;border-radius:11px;padding:10px 12px;min-height:48px}.compare-address-title{position:relative;min-height:18px;line-height:18px;padding-right:24px}.compare-remove{position:absolute;top:-1px;right:0;width:20px;height:20px;padding:0;font-size:20px;line-height:20px;display:grid;place-items:center;cursor:pointer;color:var(--ink)}
+
+.area-map-legend{display:none;gap:14px;font-size:11px}.area-mode .area-map-legend{display:flex}.area-mode .map-legend{display:none}.view-switch{flex-wrap:wrap}.area-mode .searchbox,.area-mode #status,.area-mode .grid>.card:not(.map-card){display:none}.area-setup{margin-bottom:16px}.area-intro{margin:8px 0 16px;color:var(--muted);font-size:12px}.area-controls{display:flex;align-items:end;gap:14px;flex-wrap:wrap;margin-bottom:16px}.area-controls label{display:grid;gap:6px;font-size:12px;font-weight:700}.area-controls input{padding:8px;border:1px solid #b9d4e6;border-radius:8px;max-width:220px;background:#fff;color:var(--ink)}.area-coverage{padding:12px;background:#fff;border-radius:10px;margin-bottom:14px;font-size:12px;line-height:1.5}.area-coverage.partial{border-left:4px solid #b1842e}.area-controls select,.area-criteria select,.area-criteria input[type=number]{padding:8px;border:1px solid #b9d4e6;border-radius:8px;background:#fff;color:var(--ink)}.area-controls select{max-width:100%;min-width:180px}.area-criteria{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}.area-rule{background:#fff;border-radius:12px;padding:12px;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;font-size:12px}.area-rule>label:first-child{font-weight:700}.area-rule input[type=number]{width:62px;box-sizing:border-box;text-align:center}.area-rule select{grid-column:1/-1;width:100%}.area-rule input:disabled,.area-rule select:disabled{opacity:.45}.area-rule input[type=checkbox]{accent-color:var(--green)}.area-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.area-actions .btn{display:inline-flex;gap:9px;align-items:center}.area-note{font-size:11px;color:var(--muted);margin-top:14px;line-height:1.5}.area-results{margin-top:18px}.area-results>h3{margin:0 0 12px;font-size:15px}.area-group{background:#fff;border-radius:12px;padding:12px;margin:10px 0}.area-group summary{cursor:pointer;font-size:13px;font-weight:700}.area-place{margin:12px 0 0;padding:0 0 0 12px;border-left:2px solid #dce9e9}.area-address{padding:12px 0;border-bottom:1px solid var(--line)}.area-checks{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.area-check{font-size:11px;border-radius:6px;padding:5px 7px;background:#edf6ef}.area-check.fail{background:#fff0ed}.area-check.unknown{background:#fff4db}.area-open{font-size:11px;border:1px solid #b9d4e6;border-radius:7px;background:white;color:var(--green);padding:7px 10px;cursor:pointer}.area-address-title{font-size:12px;font-weight:700}.area-progress{width:100%;height:8px;margin-top:12px;accent-color:var(--green)}@media(max-width:620px){.area-controls{display:grid}.area-controls select{width:100%}.area-criteria{grid-template-columns:1fr}.area-place{padding-left:7px}}
+.area-place-note{font-size:11px;color:var(--muted);margin:0 0 14px}
+.area-select-wrap{position:relative;display:inline-block}.area-select-wrap select{padding-right:54px}.place-loading{position:absolute;right:30px;top:50%;margin-top:-7px;width:14px;height:14px;border:2px solid #c6dbe6;border-top-color:var(--green);border-radius:50%;animation:cabin-spin .8s linear infinite;pointer-events:none}@media(prefers-reduced-motion:reduce){.place-loading{animation:none}}
+.area-mode .map-area{height:570px}@media(max-width:620px){.area-mode .map-area{height:480px}}.area-mode .leaflet-tile-pane{filter:grayscale(1) brightness(1.04);opacity:.88}.area-house-icon{background:none;border:0}.area-house{display:grid;place-items:center;width:30px;height:30px;background:#fff;border:2px solid currentColor;border-radius:9px;box-shadow:0 1px 5px #0005;color:#28785b}.area-house.orange{color:#c57a16}.area-house svg{width:22px;height:22px;fill:currentColor}.area-house-cluster{display:grid;place-items:center;border-radius:50%;width:38px;height:38px;background:#28785b;color:white;border:3px solid #fff;font-weight:800;box-shadow:0 1px 6px #0005}.area-detail-panel{position:absolute;top:12px;right:12px;z-index:1100;width:380px;max-width:calc(100% - 24px);background:#fff;border:1px solid #d5e3df;border-radius:13px;box-shadow:0 6px 24px #1234;overflow:hidden;font-size:12px}.area-detail-title{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;cursor:grab;touch-action:none;user-select:none;border-bottom:1px solid #e7eeeb}.area-detail-title>div{display:flex;gap:5px}.area-detail-title button{border:0;background:none;font-size:20px;padding:0 5px;color:var(--ink)}.area-detail-body{padding:14px;max-height:min(380px,55vh);overflow:auto;overscroll-behavior:contain}.area-detail-panel.minimized .area-detail-body{display:none}.area-detail-address{font-weight:700;font-size:13px;margin-bottom:8px}.area-detail-check{padding:10px 0;border-top:1px solid #e7eeeb}.area-detail-check strong{display:block;margin-bottom:3px}.area-detail-check .sub{font-size:10px}.area-detail-body .area-open{margin-top:10px}@media(max-width:620px){.area-detail-panel{width:320px}.area-detail-body{max-height:230px}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top"><div class="brand"><span class="brandmark">⌖</span> MY PERFECT LOCATION</div></header>
+    <section class="hero"><div><div class="eyebrow">Et sted å lande</div><h1>Finn ut hvordan et sted faktisk passer livet ditt.</h1><p>Søk etter et sted, velg punktet du vurderer, og få en samlet oversikt over hverdagsliv, naturfare og muligheter i nærheten.</p></div></section>
+    <div class="view-switch" role="group" aria-label="Velg visning"><button type="button" id="singleView" aria-pressed="true">Velg ett sted</button><button type="button" id="compareView" aria-pressed="false">Sammenlign flere steder</button><button type="button" id="areaView" aria-pressed="false">Finn steder som passer for deg</button></div>
+    <section class="searchbox"><form class="searchrow" id="searchForm"><input id="placeInput" autocomplete="off" aria-autocomplete="list" aria-controls="suggestions" value="" aria-label="Stedsnavn eller adresse" placeholder="Skriv stedsnavn eller adresse, for eksempel Røros"></form><div id="suggestions" class="suggestions hidden" aria-live="polite"></div></section>
+    <div class="status hidden" id="status" role="status" aria-live="polite"></div>
+
+<section class="card compare-setup hidden" id="compareSetup" aria-label="Adresser til sammenligning"><div class="compare-heading"><div><h2>Sammenlign flere steder</h2></div></div><div id="compareAddresses" class="compare-addresses"></div><button type="button" class="mini" id="compareAdd">+ Legg til en tredje adresse</button><div class="compare-settings" id="compareSettings"><div class="compare-radius-option"><label><input type="checkbox" id="compareEnableHazards"> Grunnforhold og naturkatastrofer</label></div><div class="compare-radius-option"><label><input type="checkbox" id="compareEnableNearby"> Nærtilbud</label><label><input id="compareNearby" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for nærtilbud i kilometer" disabled> km</label></div><div class="compare-radius-option"><label><input type="checkbox" id="compareEnableFish"> Fiskevann</label><label><input id="compareFish" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for fiskevann i kilometer" disabled> km</label></div><div class="compare-radius-option"><label><input type="checkbox" id="compareEnableBath"> Badevann</label><label><input id="compareBath" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for badevann i kilometer" disabled> km</label></div><div class="compare-radius-option"><label><input type="checkbox" id="compareEnableCabins"> DNT-hytter</label><label><input id="compareCabins" type="number" min="1" max="100" step="1" value="25" aria-label="Søkeradius for dnt-hytter i kilometer" disabled> km</label></div></div><details class="compare-categories"><summary>Velg nærtilbud</summary><div id="compareCategories" class="nearby-options"></div></details><div class="compare-toolbar"><button class="btn" type="button" id="compareRun" aria-busy="false"><span>Sammenlign adressene</span><span id="compareSpinner" class="search-spinner hidden" aria-hidden="true"></span></button><label><input type="checkbox" id="compareDifferences"> Vis bare forskjeller</label><span id="compareStatus" role="status" aria-live="polite">Velg minst to adresser.</span></div></section>
+
+<section class="card area-setup hidden" id="areaSetup" aria-label="Finn steder som passer for deg"><h2>Finn steder som passer for deg</h2><div class="area-controls"><label>Kommune<select id="areaMunicipality"><option value="">Henter kommuner …</option></select></label><label>Sted<span class="area-select-wrap"><select id="areaLocality" aria-label="Sted" aria-busy="false" disabled><option value="">Velg kommune først</option></select><span id="areaPlaceSpinner" class="place-loading hidden" aria-hidden="true"></span></span></label></div><p class="area-place-note" id="areaPlaceNotice" role="status"></p><div id="areaCriteria" class="area-criteria"><div class="area-rule"><label><input type="checkbox" id="areaEnable-school"> Skole</label><label>Innenfor <input type="number" id="areaRadius-school" min="0.1" max="100" step="0.1" value="1" aria-label="Maksavstand til skole i kilometer" disabled> km</label><select id="areaPriority-school" aria-label="Prioritet for skole" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div><div class="area-rule"><label><input type="checkbox" id="areaEnable-kindergarten"> Barnehage</label><label>Innenfor <input type="number" id="areaRadius-kindergarten" min="0.1" max="100" step="0.1" value="1" aria-label="Maksavstand til barnehage i kilometer" disabled> km</label><select id="areaPriority-kindergarten" aria-label="Prioritet for barnehage" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div><div class="area-rule"><label><input type="checkbox" id="areaEnable-shop"> Matbutikk</label><label>Innenfor <input type="number" id="areaRadius-shop" min="0.1" max="100" step="0.1" value="1" aria-label="Maksavstand til matbutikk i kilometer" disabled> km</label><select id="areaPriority-shop" aria-label="Prioritet for matbutikk" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div><div class="area-rule"><label><input type="checkbox" id="areaEnable-bath"> Badevann</label><label>Innenfor <input type="number" id="areaRadius-bath" min="0.1" max="100" step="0.1" value="5" aria-label="Maksavstand til badevann i kilometer" disabled> km</label><select id="areaPriority-bath" aria-label="Prioritet for badevann" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div><div class="area-rule"><label><input type="checkbox" id="areaEnable-fish"> Fiskevann</label><label>Innenfor <input type="number" id="areaRadius-fish" min="0.1" max="100" step="0.1" value="10" aria-label="Maksavstand til fiskevann i kilometer" disabled> km</label><select id="areaPriority-fish" aria-label="Prioritet for fiskevann" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div><div class="area-rule"><label><input type="checkbox" id="areaEnable-hazards"> Grunnforhold og naturfare</label><span class="sub">Ingen registrerte faresignaler</span><select id="areaPriority-hazards" aria-label="Prioritet for grunnforhold og naturfare" disabled><option value="must">Må oppfylles</option><option value="wish">Ønskelig</option></select></div></div><div class="area-actions"><button type="button" class="btn" id="areaRun" aria-busy="false">Finn steder<span class="search-spinner hidden" id="areaSpinner" aria-hidden="true"></span></button><button type="button" class="mini hidden" id="areaStop">Stopp søket</button><span class="sub" id="areaStatus" role="status" aria-live="polite"></span></div><progress id="areaProgress" class="area-progress hidden" max="100" value="0" aria-label="Fremdrift for områdesøk"></progress><div class="sub card-source">Kilder: Kartverket, OpenStreetMap, NVE, NGU/DSA, OFA/Inatur og Miljødirektoratet</div></section>
+    <section class="grid">
+      <article class="card map-card"><div class="map-top"><div class="card-head" style="margin:0"><div><h2 id="mapTitle">Kart over området</h2></div></div></div><div class="map-wrap" id="mapWrap"><div id="map" class="map-area"></div><section class="route-panel hidden" id="routePanel" aria-label="Veibeskrivelse"><div class="route-title" id="routeDragHandle" tabindex="0" aria-label="Flytt veibeskrivelsen med piltastene eller dra i overskriften" title="Dra for å flytte"><strong id="routeTitle">Veibeskrivelse</strong><div class="route-window-actions"><button type="button" id="routeMinimize" aria-label="Minimer veibeskrivelse" aria-expanded="true">−</button><button type="button" id="routeClose" aria-label="Lukk veibeskrivelse">×</button></div></div><div id="routeEndpoints" class="sub"></div><fieldset id="routeModes"><legend>Velg transportmetode</legend><label><input type="checkbox" value="walking"> Gå</label><label><input type="checkbox" value="bicycling"> Sykle</label><label><input type="checkbox" value="driving"> Bil</label><label><input type="checkbox" value="transit"> Kollektivtransport</label></fieldset><div id="routeStatus" role="status" aria-live="polite">Velg transportmetode for å beregne ruten.</div><ol id="routeSteps"></ol><a id="routeGoogle" class="hidden" target="_blank" rel="noreferrer">Åpne ruten i Google Maps ↗</a><div class="sub" id="routeSource"></div></section><button type="button" class="route-show hidden" id="routeShow">Vis veibeskrivelse</button><section class="area-detail-panel hidden" id="areaDetailPanel" aria-label="Detaljer om stedet"><div class="area-detail-title" id="areaDetailHandle" tabindex="0" aria-label="Flytt detaljboksen med piltastene eller dra i overskriften"><strong>Detaljer om stedet</strong><div><button type="button" id="areaDetailMinimize" aria-label="Minimer detaljer" aria-expanded="true">−</button><button type="button" id="areaDetailClose" aria-label="Lukk detaljer">×</button></div></div><div class="area-detail-body" id="areaDetailBody"></div></section></div><div class="map-foot"><div class="area-map-legend"><span>🟢 Må-krav og valgte ønsker oppfylt</span></div><div class="map-legend"><span title="Vises for nærtilbudskategoriene du har krysset av"><i class="legend-symbol category-nearby"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="5" fill="currentColor"/></svg></i>Nærtilbud</span><span><i class="legend-symbol category-fish"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M2 7l6 5-6 5V7zm5 5c4-7 11-7 15 0-4 7-11 7-15 0z"/><circle cx="17" cy="10" r="1" fill="#2474c7"/></svg></i>Fiskevann</span><span><i class="legend-symbol category-bath"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 7q3-4 6 0t6 0t8 0M2 12q3-4 6 0t6 0t8 0M2 17q3-4 6 0t6 0t8 0" fill="none" stroke="currentColor" stroke-width="2"/></svg></i>Badevann</span><span><i class="legend-symbol category-hut"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 10 12 3l10 7M4 9v12h16V9M16 4V2h3v5M4 13h16M4 17h16M9 21v-5h6v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></i>DNT-hytte</span></div><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">Kilde: OpenStreetMap</a></div></article>
+      <article class="card compare-result-card hidden" id="compareResults"><div class="compare-heading"><h2>Adresse mot adresse</h2><span class="sub">Åpne en rad for å se detaljene på tvers av adressene.</span></div><div id="compareTable" class="compare-table-wrap"><div class="water-empty">Velg adresser og trykk «Sammenlign adressene».</div></div><div class="sub card-source">Kilder: OpenStreetMap, Entur, NVE, NGU/DSA, Kartverket, OFA/Inatur, GBIF, Miljødirektoratet og UT.no/DNT</div></article>
+      <article class="card nearby-card"><div class="water-heading"><h2>Nærtilbud innenfor:</h2><label><input id="nearbyRadius" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for nærtilbud i kilometer"> km</label></div><fieldset class="nearby-options" id="nearbyOptions"><legend class="sub">Velg hva du vil vise</legend><label class="nearby-option"><input type="checkbox" value="school"><span>Skoler</span><span class="nearby-count" id="nearby-count-school">—</span></label><label class="nearby-option"><input type="checkbox" value="kindergarten"><span>Barnehager</span><span class="nearby-count" id="nearby-count-kindergarten">—</span></label><label class="nearby-option"><input type="checkbox" value="shop"><span>Matbutikker</span><span class="nearby-count" id="nearby-count-shop">—</span></label><label class="nearby-option"><input type="checkbox" value="gym"><span>Trening</span><span class="nearby-count" id="nearby-count-gym">—</span></label><label class="nearby-option"><input type="checkbox" value="pharmacy"><span>Apotek</span><span class="nearby-count" id="nearby-count-pharmacy">—</span></label><label class="nearby-option"><input type="checkbox" value="doctors"><span>Legekontorer</span><span class="nearby-count" id="nearby-count-doctors">—</span></label><label class="nearby-option"><input type="checkbox" value="dentist"><span>Tannleger</span><span class="nearby-count" id="nearby-count-dentist">—</span></label><label class="nearby-option"><input type="checkbox" value="library"><span>Bibliotek</span><span class="nearby-count" id="nearby-count-library">—</span></label><label class="nearby-option"><input type="checkbox" value="cafe"><span>Kaféer</span><span class="nearby-count" id="nearby-count-cafe">—</span></label><label class="nearby-option"><input type="checkbox" value="restaurant"><span>Restauranter</span><span class="nearby-count" id="nearby-count-restaurant">—</span></label><label class="nearby-option"><input type="checkbox" value="charging_station"><span>Ladestasjoner</span><span class="nearby-count" id="nearby-count-charging_station">—</span></label><label class="nearby-option"><input type="checkbox" value="trail"><span>Turstier/skiløyper</span><span class="nearby-count" id="nearby-count-trail">—</span></label><label class="nearby-option"><input type="checkbox" value="transit"><span>Kollektivtransport</span><span class="nearby-count" id="nearby-count-transit">—</span></label></fieldset><div class="water-list" id="amenityList" aria-live="polite">Velg et sted for å se nærtilbud.</div><div class="sub card-source">Kilder: OpenStreetMap og Entur</div></article>
+      <article class="card hazard-card"><div class="card-head"><div><h2>Grunnforhold og naturkatastrofer</h2></div></div><div class="risklist" id="hazardList"><div class="risk"><strong>Velg et sted for kartoppslag</strong><span>NVE</span></div></div><div class="sub card-source">Kilder: NVE, NGU/DSA og Kartverket</div></article>
+      <article class="card wide water-card"><div class="water-columns"><section><div class="water-heading"><h2>Fiskevann innenfor:</h2><label><input id="fishRadius" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for fiskevann i kilometer"> km</label></div><div id="fishingWaters" class="water-list">Velg et sted for å finne vann.</div></section><section><div class="water-heading"><h2>Badevann innenfor:</h2><label><input id="bathRadius" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for badevann i kilometer"> km</label></div><div id="bathingPlaces" class="water-list">Velg et sted for å finne badeplasser.</div></section></div><div class="sub card-source">Kilder: NVE, OFA/Inatur, GBIF og Miljødirektoratet</div></article>
+      <article class="card cabin-card"><div class="water-heading"><h2>DNT-hytter innenfor:</h2><label><input id="cabinRadius" type="number" min="1" max="100" step="1" value="5" aria-label="Søkeradius for DNT-hytter i kilometer"> km</label></div><div id="cabinList"><div class="risk"><strong>Hytter lastes etter stedsvalg</strong><span>UT.no / OSM</span></div></div><div class="sub card-source" id="cabinSources">Kilder: UT.no/DNT og OpenStreetMap</div></article>
+
+
+    </section>
+
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script>
+  const $=s=>document.querySelector(s), monthNames=['Jan','Feb','Mar','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Des'];
+  let map, pin, ring, markers=[], currentPlace=null, currentPlaceQuery='', nearbyData=[],  nearbyError=false;
+  const typeFor=t=>{const a=t.amenity||'',s=t.shop||'',l=t.leisure||'',tour=t.tourism||'',p=t['piste:type']||'';if(['pharmacy','doctors','dentist','library','cafe','restaurant','charging_station'].includes(a))return a;if(['doctor','dentist','pharmacy'].includes(t.healthcare))return t.healthcare==='doctor'?'doctors':t.healthcare;if(a==='kindergarten')return 'kindergarten';if(['school','college','university'].includes(a))return 'school';if(['supermarket','convenience','greengrocer'].includes(s))return 'shop';if(['fitness_centre','gym'].includes(a)||l==='fitness_centre')return 'gym';if(tour==='alpine_hut'||tour==='wilderness_hut')return 'hut';if(tour==='hostel')return 'hut';if(p||['hiking','foot','ski'].includes(t.route)||['path','footway'].includes(t.highway))return 'trail';if(['park','nature_reserve'].includes(l)||['wood','water'].includes(t.natural))return 'nature';return null};
+  const labelFor=k=>({school:'Skole',kindergarten:'Barnehage',pharmacy:'Apotek',doctors:'Legekontor',dentist:'Tannlege',library:'Bibliotek',cafe:'Kafé',restaurant:'Restaurant',charging_station:'Ladestasjon',shop:'Matbutikk',gym:'Trening',hut:'Hytte',ski:'Skiløype',trail:'Tursti/skiløype',nature:'Natur/vann'})[k]||'Sted';
+  const categorySymbols={"nearby": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"5\" fill=\"currentColor\"/></svg>", "fish": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M2 7l6 5-6 5V7zm5 5c4-7 11-7 15 0-4 7-11 7-15 0z\"/><circle cx=\"17\" cy=\"10\" r=\"1\" fill=\"#2474c7\"/></svg>", "bath": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M2 7q3-4 6 0t6 0t8 0M2 12q3-4 6 0t6 0t8 0M2 17q3-4 6 0t6 0t8 0\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"/></svg>", "hut": "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M2 10 12 3l10 7M4 9v12h16V9M16 4V2h3v5M4 13h16M4 17h16M9 21v-5h6v5\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linejoin=\"round\"/></svg>"};
+  function categoryMarker(point,kind){
+    const anchor=kind==='fish'?[28,14]:kind==='bath'?[0,14]:[14,14];
+    const icon=L.divIcon({className:'category-marker',html:`<span class="category-symbol category-${kind}">${categorySymbols[kind]}</span>`,iconSize:[29,29],iconAnchor:anchor});
+    return L.marker([point.lat,point.lon],{icon,title:point.name||point.tags?.name||'',alt:point.name||point.tags?.name||kind});
+  }
+  function initMap(){map=L.map('map',{scrollWheelZoom:false}).setView([59.9139,10.7522],11);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map)}
+  function distance(a,b,c,d){const R=6371,p1=a*Math.PI/180,p2=c*Math.PI/180,dp=(c-a)*Math.PI/180,dl=(d-b)*Math.PI/180,x=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;return 2*R*Math.asin(Math.sqrt(x))}
+  function api(path){return fetch(path).then(async r=>{let d=await r.json();if(!r.ok){const error=Error(d.error||'Oppslaget feilet');error.status=r.status;throw error}return d})}
+  let routeOrigin=null,routeTarget=null,routeRequest=0,routeLayers=[],routeDestination=null;
+  function clearRouteLines(){routeLayers.forEach(layer=>map.removeLayer(layer));routeLayers=[]}
+  function closeRoute(){$('#routeShow').classList.add('hidden');$('#routePanel').classList.remove('route-minimized');$('#routePanel').style.left='';$('#routePanel').style.top='';$('#routePanel').style.right='';setRouteMinimized(false);++routeRequest;routeTarget=null;if(map){clearRouteLines();if(routeDestination)map.removeLayer(routeDestination)}routeDestination=null;$('#routePanel').classList.add('hidden');$('#mapWrap').classList.remove('route-open');if(map)setTimeout(()=>map.invalidateSize(),0)}
+  function showRoute(item,origin=currentPlace){
+    if(!origin)return;
+    closeRoute();routeOrigin=origin;routeTarget={lat:item.lat,lon:item.lon,name:item.name||item.tags?.name||'Valgt sted'};
+    $('#routePanel').classList.remove('hidden');$('#mapWrap').classList.add('route-open');
+    $('#routeEndpoints').textContent=origin.name+' → '+routeTarget.name;
+    $('#routeStatus').textContent='Velg transportmetode for å beregne ruten.';$('#routeSteps').innerHTML='';$('#routeSource').textContent='';$('#routeGoogle').classList.add('hidden');
+    $('#routeModes').querySelectorAll('input').forEach(input=>input.checked=false);
+    routeDestination=L.marker([item.lat,item.lon]).addTo(map).bindPopup(esc(routeTarget.name));
+    setTimeout(()=>{if(!routeTarget)return;map.invalidateSize();map.fitBounds([[origin.lat,origin.lon],[routeTarget.lat,routeTarget.lon]],{padding:[40,40],maxZoom:15})},0);
+    $('#map').scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  $('#routePanel').addEventListener('pointerdown',event=>event.stopPropagation());
+  $('#routePanel').addEventListener('dblclick',event=>event.stopPropagation());
+  $('#routeClose').addEventListener('click',()=>{$('#routePanel').classList.add('hidden');$('#routeShow').classList.remove('hidden')});
+  $('#routeShow').addEventListener('click',()=>{$('#routePanel').classList.remove('hidden');$('#routeShow').classList.add('hidden');clampRoutePanel()});
+  function setRouteMinimized(minimized){
+    $('#routePanel').classList.toggle('route-minimized',minimized);
+    const button=$('#routeMinimize');button.textContent=minimized?'+':'−';button.setAttribute('aria-expanded',String(!minimized));button.setAttribute('aria-label',minimized?'Gjenopprett veibeskrivelse':'Minimer veibeskrivelse');
+  }
+  $('#routeMinimize').addEventListener('click',()=>{setRouteMinimized(!$('#routePanel').classList.contains('route-minimized'));clampRoutePanel()});
+  function moveRoutePanel(left,top){
+    const panel=$('#routePanel'),wrap=$('#mapWrap');
+    panel.style.left=Math.max(0,Math.min(left,Math.max(0,wrap.clientWidth-panel.offsetWidth)))+'px';
+    panel.style.top=Math.max(0,Math.min(top,Math.max(0,wrap.clientHeight-panel.offsetHeight)))+'px';panel.style.right='auto';
+  }
+  function clampRoutePanel(){if($('#routePanel').classList.contains('hidden'))return;const p=$('#routePanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();moveRoutePanel(p.left-w.left,p.top-w.top)}
+  let routeDrag=null;
+  $('#routeDragHandle').addEventListener('pointerdown',event=>{
+    if(event.target.closest('button')||event.button!==0)return;
+    const p=$('#routePanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();
+    routeDrag={id:event.pointerId,x:event.clientX,y:event.clientY,left:p.left-w.left,top:p.top-w.top};
+    event.currentTarget.setPointerCapture(event.pointerId);event.preventDefault();event.stopPropagation();
+  });
+  $('#routeDragHandle').addEventListener('pointermove',event=>{if(routeDrag&&routeDrag.id===event.pointerId){moveRoutePanel(routeDrag.left+event.clientX-routeDrag.x,routeDrag.top+event.clientY-routeDrag.y);event.preventDefault();event.stopPropagation()}});
+  for(const type of ['pointerup','pointercancel'])$('#routeDragHandle').addEventListener(type,event=>{if(routeDrag?.id===event.pointerId){routeDrag=null;if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId)}});
+  $('#routeDragHandle').addEventListener('keydown',event=>{if(event.target!==event.currentTarget)return;const delta={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]}[event.key];if(delta){event.preventDefault();const p=$('#routePanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();moveRoutePanel(p.left-w.left+delta[0],p.top-w.top+delta[1])}});
+  window.addEventListener('resize',clampRoutePanel);
+  $('#routeModes').addEventListener('change',event=>{
+    if(event.target.type!=='checkbox')return;
+    $('#routeModes').querySelectorAll('input').forEach(input=>{if(input!==event.target)input.checked=false});
+    ++routeRequest;clearRouteLines();$('#routeSteps').innerHTML='';$('#routeSource').textContent='';
+    if(event.target.checked)calculateRoute(event.target.value);else{$('#routeStatus').textContent='Velg transportmetode for å beregne ruten.';$('#routeGoogle').classList.add('hidden')}
+  });
+  async function calculateRoute(mode){
+    if(!routeTarget||!routeOrigin)return;
+    const target=routeTarget,origin=routeOrigin,request=++routeRequest;
+    $('#routeStatus').textContent='Beregner veibeskrivelse …';
+    const external=new URL('https://www.google.com/maps/dir/');external.search=new URLSearchParams({api:'1',origin:origin.lat+','+origin.lon,destination:target.lat+','+target.lon,travelmode:mode});
+    $('#routeGoogle').href=external.toString();$('#routeGoogle').classList.remove('hidden');
+    try{
+      const data=await api('/api/route?'+new URLSearchParams({lat:origin.lat,lon:origin.lon,toLat:target.lat,toLon:target.lon,mode}));
+      if(request!==routeRequest||routeTarget!==target||routeOrigin!==origin)return;
+      clearRouteLines();const all=[];
+      for(const line of data.lines){all.push(...line);routeLayers.push(L.polyline(line,{color:'#2474c7',weight:6,opacity:.9}).addTo(map))}
+      if(!all.length)throw Error('Ingen rutegeometri mottatt');
+      map.fitBounds(all,{paddingTopLeft:[35,35],paddingBottomRight:[35,35]});
+      $('#routeStatus').textContent=data.distanceKm.toFixed(1)+' km · '+Math.max(1,Math.round(data.seconds/60))+' min'+(mode==='transit'?' · avreise nå':'');
+      $('#routeSteps').innerHTML=data.steps.map(step=>'<li>'+esc(step.text)+(step.startTime?' · '+esc(new Date(step.startTime).toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'})):'')+'</li>').join('');
+      $('#routeSource').textContent='Kilde: '+data.source;
+    }catch(error){if(request!==routeRequest||routeTarget!==target)return;clearRouteLines();$('#routeStatus').textContent=error.status===404?'Start «Start app.cmd» for å aktivere rutevisningen.':error.message+' Du kan også åpne ruten i Google Maps.'}
+  }
+
+  let searchRequest=0,addressSuggestionTimer;
+  $('#placeInput').addEventListener('input',()=>{
+    const query=$('#placeInput').value.trim(),request=++searchRequest;clearTimeout(addressSuggestionTimer);
+    $('#suggestions').classList.add('hidden');
+    if(query.length<3)return;
+    addressSuggestionTimer=setTimeout(async()=>{
+      try{
+        const rows=await api('/api/address-suggestions?q='+encodeURIComponent(query));
+        if(request!==searchRequest)return;
+        const box=$('#suggestions');box.innerHTML='';
+        rows.forEach(row=>{const button=document.createElement('button');button.type='button';button.className='suggestion';button.textContent=row.name;button.onclick=()=>{++searchRequest;clearTimeout(addressSuggestionTimer);$('#placeInput').value=row.name;currentPlaceQuery=row.name;box.classList.add('hidden');choose(row)};box.append(button)});
+        const hint=document.createElement('span');hint.className='address-source';hint.textContent=rows.length?'Adresseforslag fra Kartverket':'Ingen adresseforslag. Skriv en mer presis adresse.';box.append(hint);box.classList.remove('hidden');
+      }catch(error){if(request===searchRequest){$('#suggestions').innerHTML='<span class="address-source">Adresseforslag kunne ikke hentes. Prøv igjen om litt.</span>';$('#suggestions').classList.remove('hidden')}}
+    },450);
+  });
+  $('#placeInput').addEventListener('keydown',event=>{if(event.key==='Escape'){$('#suggestions').classList.add('hidden');clearTimeout(addressSuggestionTimer);++searchRequest}if(event.key==='ArrowDown'){const first=$('#suggestions').querySelector('button');if(first){event.preventDefault();first.focus()}}});
+
+  function setStatus(s,busy=false){$('#status').innerHTML=(busy?'<span class="search-spinner" aria-hidden="true"></span>':'')+'<span>'+esc(s)+'</span>';$('#status').classList.toggle('hidden',!s)}
+  $('#searchForm').addEventListener('submit',e=>{e.preventDefault();$('#suggestions').querySelector('button')?.focus()});
+  async function searchPlace(){clearTimeout(addressSuggestionTimer);const search=++searchRequest;const q=$('#placeInput').value.trim();if(!q)return;currentPlaceQuery=q;setStatus('Søker etter stedet …',true);$('#suggestions').classList.add('hidden');try{const rows=await api('/api/geocode?q='+encodeURIComponent(q));if(search!==searchRequest)return;if(!rows.length){setStatus('Fant ikke stedet. Prøv et mer presist navn eller en adresse.');return}if(rows.length===1)choose(rows[0]);else{const box=$('#suggestions');box.innerHTML='';rows.forEach(row=>{const b=document.createElement('button');b.className='suggestion';b.textContent=row.name;b.onclick=()=>{box.classList.add('hidden');choose(row)};box.append(b)});box.classList.remove('hidden');setStatus('Velg riktig sted fra trefflisten.')}}catch(err){if(search!==searchRequest)return;setStatus('Stedsøk kunne ikke gjennomføres: '+err.message)}}
+  async function choose(place){closeRoute();currentPlace=place;const lat=place.lat,lon=place.lon;$('#mapTitle').textContent=place.name.split(',').slice(0,2).join(',');nearbyData=[];nearbyError=false;setStatus('Henter åpne data rundt valgt punkt …',true);map.setView([lat,lon],12);if(pin)map.removeLayer(pin);if(ring)map.removeLayer(ring);markers.forEach(m=>map.removeLayer(m));markers=[];pin=L.marker([lat,lon]).addTo(map).bindPopup('<b>Valgt sted</b><br>'+place.name.split(',').slice(0,2).join(',')).openPopup();ring=L.circle([lat,lon],{radius:5000,color:'#8ab3a5',weight:1,fillColor:'#cde7df',fillOpacity:.12}).addTo(map);
+    const jobs=[loadNearby(lat,lon),loadHazards(lat,lon),loadWaters(lat,lon),loadCabins(lat,lon)];await Promise.allSettled(jobs);if(comparison.active)drawComparisonAddresses();else fitSingleResults();if(currentPlace===place)setStatus('')}
+  let nearbyRequest=0,nearbyMarkers=[],nearbyTimer,nearbyReady=false,nearbyResult=null,nearbySourceErrors={};
+  const nearbyGroups=[["school", "Skoler"], ["kindergarten", "Barnehager"], ["shop", "Matbutikker"], ["gym", "Trening"], ["pharmacy", "Apotek"], ["doctors", "Legekontorer"], ["dentist", "Tannleger"], ["library", "Bibliotek"], ["cafe", "Kaféer"], ["restaurant", "Restauranter"], ["charging_station", "Ladestasjoner"], ["trail", "Turstier/skiløyper"], ["transit", "Kollektivtransport"]];
+  const selectedNearbyKinds=new Set();
+  $('#nearbyOptions').addEventListener('change',event=>{
+    if(event.target.type!=='checkbox')return;
+    if(event.target.checked)selectedNearbyKinds.add(event.target.value);else selectedNearbyKinds.delete(event.target.value);
+    if(nearbyReady)renderNearby();
+  });
+  function clearNearbyMarkers(){nearbyMarkers.forEach(marker=>map.removeLayer(marker));markers=markers.filter(marker=>!nearbyMarkers.includes(marker));nearbyMarkers=[]}
+  function nearbyName(item,kind){
+    const name=esc(item.tags.name||labelFor(kind));
+    for(const key of ['website','contact:website']){
+      let raw=(item.tags[key]||'').trim();if(!raw)continue;
+      if(!/^https?:\/\//i.test(raw))raw='https://'+raw;
+      try{const url=new URL(raw);if(!['http:','https:'].includes(url.protocol)||url.username||url.password||!url.hostname.includes('.')||/(^|\.)(facebook\.com|instagram\.com|wikipedia\.org|wikidata\.org|google\.com|twitter\.com|x\.com)$/.test(url.hostname))continue;
+        return `<a class="compact-name official-website" href="${esc(url.href)}" target="_blank" rel="noopener noreferrer">${name}</a>`;
+      }catch(error){}
+    }
+    return `<span class="compact-name">${name}</span>`;
+  }
+  function renderNearby(){
+    if(!nearbyResult)return;
+    const {lat,lon,radius}=nearbyResult,box=$('#amenityList');
+    clearNearbyMarkers();
+      const groups=nearbyGroups.filter(([kind])=>selectedNearbyKinds.has(kind));
+      box.innerHTML=groups.length?'<div class="compact-results">'+groups.map(([kind,label])=>{
+        const items=nearbyData.filter(x=>x.kind===kind),sourceError=nearbySourceErrors[kind==='transit'?'transit':'osm'];
+        return `<details class="compact-category"><summary>${label}</summary><div class="compact-category-list">${items.length?items.map((item,i)=>{
+          const km=distance(lat,lon,item.lat,item.lon),key=`nearby-${kind}-${i}`;
+          const marker=categoryMarker(item,'nearby').addTo(map).bindPopup(`<b>${esc(item.tags.name||labelFor(kind))}</b><br>${km.toFixed(1)} km`);
+          markers.push(marker);nearbyMarkers.push(marker);
+          queueMicrotask(()=>document.getElementById(key)?.addEventListener('click',()=>{showRoute(item)}));
+          return `<div class="compact-result">${nearbyName(item,kind)}<span class="water-distance">${km.toFixed(1)} km</span><button type="button" id="${key}">Vis på kart</button></div>`
+        }).join(''):`<p>${sourceError?esc(sourceError):`Ingen kartlagte tilbud innenfor ${radius} km.`}</p>`}</div></details>`
+      }).join('')+'</div>':'';
+    if(comparison.active)drawComparisonResults();else fitSingleResults();
+  }
+
+  $('#nearbyRadius').addEventListener('input',event=>{
+    if(event.target.valueAsNumber>100)event.target.value='100';
+    clearTimeout(nearbyTimer);
+    if(event.target.validity.valid&&currentPlace){++nearbyRequest;nearbyTimer=setTimeout(()=>loadNearby(currentPlace.lat,currentPlace.lon),350)}
+  });
+  $('#nearbyRadius').addEventListener('change',event=>{clearTimeout(nearbyTimer);if(event.target.reportValidity()&&currentPlace)loadNearby(currentPlace.lat,currentPlace.lon)});
+  async function loadNearby(lat,lon){
+    const selected=currentPlace,request=++nearbyRequest,radius=Number($('#nearbyRadius').value);
+    const box=$('#amenityList');box.textContent='Henter nærtilbud …';nearbyReady=false;
+    for(const [kind] of nearbyGroups)$('#nearby-count-'+kind).textContent='—';
+    clearNearbyMarkers();
+    if(ring)ring.setRadius(radius*1000);
+    try{
+      const d=await api(`/api/nearby?lat=${lat}&lon=${lon}&radius=${radius*1000}`);
+      if(currentPlace!==selected||request!==nearbyRequest)return;
+      nearbySourceErrors=d.errors||{};
+      nearbyData=(d.elements||[]).map(x=>{const p=x.nearbyPoint||(x.type==='node'?x:x.center||{});return {...x,lat:p.lat,lon:p.lon,kind:x.kind||typeFor(x.tags||{})}}).filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lon)&&x.kind&&distance(lat,lon,x.lat,x.lon)<=radius);
+      nearbyData.sort((a,b)=>distance(lat,lon,a.lat,a.lon)-distance(lat,lon,b.lat,b.lon));
+      nearbyReady=true;nearbyError=false;nearbyResult={lat,lon,radius};
+      for(const [kind] of nearbyGroups)$('#nearby-count-'+kind).textContent=nearbyData.filter(x=>x.kind===kind).length;
+      renderNearby();
+
+    }catch(error){
+      if(currentPlace!==selected||request!==nearbyRequest)return;
+      nearbyError=true;box.innerHTML='<div class="water-empty">Nærtilbud kunne ikke hentes nå. Prøv igjen senere.</div>';
+    }
+  }
+
+  function cabinBookingUrl(hut){
+    const known={huldreheim:'1015390',fiskelaushytta:'10258893','bøvelstad':'10773','røyrivannskoia':'10771',fjellvang:'10775','råbjørnhytta':'10786','dølerud':'101145',fuglemyrhytta:'101209'};
+    const match=(hut.utUrl||'').match(/^https:\/\/ut\.no\/hytte\/(\d+)(?:[/?#]|$)/);
+    const regional=hut.lat>=59.5&&hut.lat<=60.5&&hut.lon>=10&&hut.lon<=11.7;
+    const id=hut.utId||(match&&match[1])||(regional&&known[hut.name.toLocaleLowerCase('nb').replace(/[^\p{L}\p{N}]/gu,'')]);
+    return id&&/^\d+$/.test(id)?'https://hyttebestilling.dnt.no/kart?type=cabin&value='+encodeURIComponent(id):'https://hyttebestilling.dnt.no/';
+  }
+  let cabinRequest=0,cabinMarkers=[],cabinTimer;
+  $('#cabinRadius').addEventListener('input',event=>{
+    if(event.target.valueAsNumber>100)event.target.value='100';
+    clearTimeout(cabinTimer);
+    if(event.target.validity.valid&&currentPlace){++cabinRequest;cabinTimer=setTimeout(()=>loadCabins(currentPlace.lat,currentPlace.lon),350)}
+  });
+  $('#cabinRadius').addEventListener('change',event=>{clearTimeout(cabinTimer);if(event.target.reportValidity()&&currentPlace)loadCabins(currentPlace.lat,currentPlace.lon)});
+  async function loadCabins(lat,lon){
+    const selected=currentPlace,request=++cabinRequest,box=$('#cabinList'),radius=Number($('#cabinRadius').value);
+    cabinMarkers.forEach(marker=>map.removeLayer(marker));markers=markers.filter(marker=>!cabinMarkers.includes(marker));cabinMarkers=[];
+    box.innerHTML=`<div class="cabin-loading" role="status" aria-atomic="true"><span class="cabin-spinner" aria-hidden="true"></span><div><strong>Søker etter DNT-hytter …</strong><small>Innenfor ${radius} km. Dette kan ta litt tid.</small></div></div>`;
+    try{
+      const data=await api(`/api/cabins?lat=${lat}&lon=${lon}&radius=${radius*1000}`);
+      if(currentPlace!==selected||request!==cabinRequest)return;
+      box.innerHTML=(data.cabins.length?'<div class="compact-results">'+data.cabins.map((hut,i)=>{
+        const key='cabin-map-'+i;
+        const marker=categoryMarker(hut,'hut').addTo(map).bindPopup(esc(hut.name));
+        markers.push(marker);cabinMarkers.push(marker);
+        queueMicrotask(()=>document.getElementById(key)?.addEventListener('click',()=>{showRoute(hut)}));
+        return `<div class="compact-result"><span class="compact-name">${esc(hut.name)}</span><span class="water-distance">${hut.distanceKm.toFixed(1)} km</span><button type="button" id="${key}">Vis på kart</button><a href="${esc(hut.bookingUrl||cabinBookingUrl(hut))}" target="_blank" rel="noreferrer">${hut.bookingUrl||cabinBookingUrl(hut)!=='https://hyttebestilling.dnt.no/'?'Sjekk om denne hytten er ledig':'Finn hytten hos DNT'} ↗</a></div>`
+      }).join('')+'</div>':`<div class="water-empty">${data.primaryAvailable?`Ingen DNT-hytter funnet innenfor ${radius} km.`:`Ingen hytter funnet i reservekilden innenfor ${radius} km. Sjekk også DNTs hyttekart.`}</div>`);
+      if(comparison.active)drawComparisonResults();else fitSingleResults();
+    }catch(error){
+      if(currentPlace!==selected||request!==cabinRequest)return;
+      if(error.status===404){
+        box.innerHTML='<div class="water-empty">Start «Start app.cmd» i appmappen for å oppdatere serveren. Oppdater deretter siden med Ctrl+F5.</div>';return
+      }
+      box.innerHTML='<div class="water-empty">Hyttedata kunne ikke hentes nå. Prøv igjen senere eller åpne DNTs hyttekart.</div>';
+    }
+  }
+
+  function fishSpeciesMarkup(species){
+    return species.map(f=>`<details class="fish-species" data-species="${esc(f.scientificName)}"><summary>${esc(f.name)}</summary><div class="fish-bio">Henter bilde og informasjon fra Wikipedia …</div></details>`).join('');
+  }
+  const fishInfoCache=new Map();
+  document.addEventListener('toggle',async event=>{
+    const row=event.target;
+    if(!row.matches?.('.fish-species')||!row.open||row.dataset.loaded)return;
+    row.dataset.loaded='loading';
+    const box=row.querySelector('.fish-bio'),species=row.dataset.species;
+    try{
+      if(!fishInfoCache.has(species))fishInfoCache.set(species,api('/api/fish-info?species='+encodeURIComponent(species)));
+      const info=await fishInfoCache.get(species);
+      if(!info.available){box.textContent=info.message;row.dataset.loaded='true';return}
+      const photo=info.image;
+      box.innerHTML=`${photo?`<figure><img src="${esc(photo.url)}" alt="${esc(info.title)}" loading="lazy"><figcaption>Foto: ${esc(photo.artist||'Se bildekilde')} · ${esc(photo.license)}${photo.pageUrl?` · <a href="${esc(photo.pageUrl)}" target="_blank" rel="noreferrer">Bildekilde</a>`:''}${photo.licenseUrl?` · <a href="${esc(photo.licenseUrl)}" target="_blank" rel="noreferrer">Lisens</a>`:''}</figcaption></figure>`:'<p>Bilde ikke tilgjengelig fra Wikipedia.</p>'}<p>${esc(info.description)}</p><div class="sub">Kilde: <a href="${esc(info.url)}" target="_blank" rel="noreferrer">Wikipedia</a> · <a href="${esc(info.textLicenseUrl)}" target="_blank" rel="noreferrer">CC BY-SA 4.0</a></div>`;
+      box.querySelector('img')?.addEventListener('error',event=>{event.target.hidden=true});
+      row.dataset.loaded='true';
+    }catch(error){fishInfoCache.delete(species);delete row.dataset.loaded;box.textContent='Wikipedia kunne ikke hentes nå. Lukk og åpne fisketypen for å prøve igjen.'}
+  },true);
+  let waterMarkers=[],waterRequest=0,waterRefreshTimer;
+  for(const id of ['fishRadius','bathRadius'])$('#'+id).addEventListener('input',event=>{
+    if(event.target.valueAsNumber>100)event.target.value='100';
+    clearTimeout(waterRefreshTimer);
+    if(event.target.validity.valid&&currentPlace){
+      ++waterRequest;
+      waterRefreshTimer=setTimeout(()=>loadWaters(currentPlace.lat,currentPlace.lon),350);
+    }
+  });
+  for(const id of ['fishRadius','bathRadius'])$('#'+id).addEventListener('change',event=>{
+    clearTimeout(waterRefreshTimer);
+    if(!event.target.reportValidity())return;
+    if(currentPlace)loadWaters(currentPlace.lat,currentPlace.lon);
+  });
+  async function loadWaters(lat,lon){
+    const selected=currentPlace,request=++waterRequest,fishBox=$('#fishingWaters'),bathBox=$('#bathingPlaces');
+    const fishRadius=Number($('#fishRadius').value),bathRadius=Number($('#bathRadius').value);
+    waterMarkers.forEach(marker=>map.removeLayer(marker));
+    markers=markers.filter(marker=>!waterMarkers.includes(marker));waterMarkers=[];
+    fishBox.innerHTML=bathBox.innerHTML='<div class="water-empty">Henter steder …</div>';
+    try{
+      const data=await api(`/api/waters?lat=${lat}&lon=${lon}&fishRadius=${fishRadius}&bathRadius=${bathRadius}`);
+      if(currentPlace!==selected||request!==waterRequest)return;
+      const list=(items,kind)=>items.map((item,i)=>{
+        const id=`water-${kind}-${i}`,isFish=kind==='fish';
+        const marker=categoryMarker(item,isFish?'fish':'bath').addTo(map).bindPopup(`<b>${esc(item.name)}</b><br>${isFish?'Fiskevann – fiskeregler må avklares':'Registrert badeområde'} · ${item.distanceKm} km`);
+        markers.push(marker);waterMarkers.push(marker);
+        let content='';
+        if(isFish){
+          content=item.species.length?`<details class="fish-dropdown"><summary>Fisketyper</summary><div class="fish-options">${fishSpeciesMarkup(item.species)}</div></details>`:`<p>${item.speciesUnavailable?'Artsdata kunne ikke hentes nå.':'Fiskearter er ikke dokumentert i oppslaget. Dette betyr ikke at vannet er fisketomt.'}</p>`;
+
+        }else{
+          content='<div class="bathing-data"><p>Vannkvalitet: ikke tilgjengelig.</p><p>Vanntemperatur: ikke tilgjengelig.</p></div>';
+        }
+        const link=(url,label)=>url?`<a href="${esc(url)}" target="_blank" rel="noreferrer">${label} ↗</a>`:'';
+        queueMicrotask(()=>{document.getElementById(id)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();showRoute(item)})});
+        return `<details class="water-item"><summary class="water-toggle"><span class="water-name">${esc(item.name)}</span><span class="water-distance">${item.distanceKm.toFixed(1)} km</span><span class="water-inline-actions"><button type="button" id="${id}">Vis på kart</button>${isFish?link(item.permitUrl,'Kjøp fiskekort'):''}</span></summary><div class="water-details">${content}</div></details>`;
+      }).join('');
+      fishBox.innerHTML=data.waters.length?list(data.waters,'fish'):`<div class="water-empty">${data.errors.lakes||data.errors.fish||data.errors.permits?'Fiskevannsdata kunne ikke hentes fullstendig. Prøv igjen senere.':`Ingen fiskevann funnet innenfor det angitte søkeområdet (${fishRadius} km).`}</div>`;
+      bathBox.innerHTML=data.bathing.length?list(data.bathing,'bath'):`<div class="water-empty">${data.errors.places?'Badeplassdata kunne ikke hentes. Prøv igjen senere.':`Ingen badeområder kartlagt innenfor ${bathRadius} km.`}</div>`;
+      if(comparison.active)drawComparisonResults();else fitSingleResults();
+    }catch(error){if(currentPlace!==selected||request!==waterRequest)return;fishBox.innerHTML=bathBox.innerHTML='<div class="water-empty">Oppslaget kunne ikke fullføres. Prøv igjen senere.</div>'}
+  }
+
+  function nveMapLink(topic,label='Sjekk stedet hos NVE',inline=false){
+    if(!currentPlace)return '';
+    // NVE Temakart only reads a point when `point` is present, and parses x/y as integers.
+    // Send integer Web Mercator metres; decimal lat/lon would be truncated by NVE's URL parser.
+    const max=20037508.342789244;
+    const x=Math.round(currentPlace.lon*max/180);
+    const y=Math.round(Math.log(Math.tan((90+currentPlace.lat)*Math.PI/360))/(Math.PI/180)*max/180);
+    const params=new URLSearchParams({point:'1',x:String(x),y:String(y),zoom:'13',wkid:'3857'});
+    return `<a class="${inline?'risk-source':'mini'}" href="https://temakart.nve.no/tema/${topic}?${params.toString()}" target="_blank" rel="noreferrer">${label} ↗</a>`
+  }
+  function clayMapLink(){
+    if(!currentPlace)return '';
+    const params=new URLSearchParams({q:currentPlaceQuery||currentPlace.name,id:''});
+    return `<a class="risk-source" href="https://kvikkleirekart.com/adresse?${params.toString()}" target="_blank" rel="noreferrer">Detaljer ↗</a>`
+  }
+  function occurrenceRow(name,found,detail='',link=''){
+    const level=found?'red':'green',status=found?(name==='Kvikkleire'?'Påvist':'Innenfor aktsomhetsområde'):'Lav risiko';
+    const row=`<div class="risk risk--${level}"><strong class="risk-label"><i class="risk-flag" aria-hidden="true"></i>${name}: ${status}</strong>${detail?`<span>${detail}</span>`:''}${link}</div>`;
+    return `<div class="hazard-entry">${row}</div>`
+  }
+  async function loadHazards(lat,lon){
+    const selected=currentPlace;
+    const box=$('#hazardList');box.innerHTML='<div class="risk"><strong>Henter kartlag …</strong><span>NVE</span></div>';
+    try{
+      const d=await api(`/api/hazards?lat=${lat}&lon=${lon}`),rows=[];
+      if(currentPlace!==selected)return;
+      if(d.floods){
+        const f=d.floods;let level='green',label='Flom: Lav risiko',detail='';
+        if(f.recentCount>2){level='red';label='Flom: Høy risiko';detail=f.lastRecent?.date?`Siste flom: ${f.lastRecent.date}`:''}
+        else if(f.recentCount>0){level='orange';label='Flom: Moderat risiko';detail=f.lastRecent?.date?`Siste flom: ${f.lastRecent.date}`:''}
+        rows.push(`<div class="hazard-entry"><div class="risk risk--${level}"><strong class="risk-label"><i class="risk-flag" aria-hidden="true"></i>${label}</strong>${detail?`<span>${detail}</span>`:''}${nveMapLink('Flomhendelser','Detaljer',true)}</div></div>`)
+      }else rows.push(`<div class="hazard-entry"><div class="risk"><strong>Flomhistorikk ikke tilgjengelig nå</strong><span>${esc(d.errors?.floods||'NVE')}</span>${nveMapLink('Flomhendelser','Detaljer',true)}</div></div>`);
+      if(d.clay){const found=d.clay.count>0,detail=found?(d.clay.riskClass?`Høyeste risikoklasse: ${d.clay.riskClass} av 5`:'Risikoklasse ikke tilgjengelig fra NVE'):'';rows.push(occurrenceRow('Kvikkleire',found,detail,clayMapLink()))}else rows.push(`<div class="hazard-entry"><div class="risk"><strong>Kvikkleiredata ikke tilgjengelig nå</strong><span>${esc(d.errors?.clay||'NVE')}</span>${clayMapLink()}</div></div>`);
+      for(const [key,label,topic,linkLabel] of [['landslide','Jordskred','jordflomskredaktsomhet','Detaljer'],['snow','Snøskred','snoskredaktsomhet','Detaljer']]){
+        const link=nveMapLink(topic,linkLabel,true);
+        if(d[key])rows.push(occurrenceRow(label,d[key].count>0,'',link));
+        else rows.push(`<div class="hazard-entry"><div class="risk"><strong>${label}data ikke tilgjengelig nå</strong><span>${esc(d.errors?.[key]||'NVE')}</span>${link}</div></div>`)
+      }
+      const radon=d.radon,radonLevel=radon?.level||'unknown';
+      const radonStatus=!radon?'Oppslaget feiler':({green:'Lav aktsomhet',orange:'Moderat aktsomhet',red:'Høy aktsomhet'}[radonLevel]||'Ingen klassifisering fra NGU');
+      rows.push(`<div class="hazard-entry"><div class="risk ${radonLevel==='unknown'?'':`risk--${radonLevel}`}"><strong class="risk-label"><i class="risk-flag" aria-hidden="true"></i>Radon: ${esc(radonStatus)}</strong><a class="risk-source" href="https://www.ngu.no/geologiske-kart/karttjenester" target="_blank" rel="noreferrer">Detaljer ↗</a></div></div>`);
+      box.innerHTML=rows.join('')
+    }catch(e){if(currentPlace!==selected)return;box.innerHTML='<div class="risk"><strong>NVE-kart kunne ikke lastes nå</strong><span>Prøv igjen</span></div>'}
+  }
+  function esc(x){return String(x||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+  const comparison={active:false,slots:[{place:null,query:''},{place:null,query:''}],generation:0,expanded:new Set(),markers:[],resultMarkers:[],settings:null};
+  const comparisonColors=['#1d6d57','#2474c7','#a66b1e'];
+  function setComparisonBusy(busy){$('#compareSpinner').classList.toggle('hidden',!busy);$('#compareRun').setAttribute('aria-busy',String(busy));$('#compareRun').disabled=busy}
+  function comparisonNotice(text){$('#compareStatus').textContent=text}
+  function invalidateComparison(){setComparisonBusy(false);++comparison.generation;comparison.settings=null;comparison.slots.forEach(slot=>slot.results=null);clearComparisonResultMarkers();$('#compareTable').innerHTML='<div class="water-empty">Velg adresser og trykk «Sammenlign adressene».</div>';comparisonNotice('')}
+  function addressLabel(slot){return slot.place?slot.place.name.split(',').slice(0,2).join(','):slot.query||'Velg adresse'}
+  function renderComparisonAddresses(){
+    $('#compareAddresses').innerHTML=comparison.slots.map((slot,i)=>`<div class="compare-address"><div class="compare-address-title"><strong style="color:${comparisonColors[i]}">${String.fromCharCode(65+i)} · Adresse ${i+1}</strong>${i===2?'<button type="button" class="compare-remove" aria-label="Fjern tredje adresse">×</button>':''}</div><form data-slot="${i}"><input autocomplete="off" aria-autocomplete="list" aria-controls="compareChoice${i}" aria-label="Adresse ${i+1}" value="${esc(slot.query)}" placeholder="Skriv adresse eller stedsnavn" maxlength="160"></form><div class="compare-choice" id="compareChoice${i}" role="status">${slot.place?esc(addressLabel(slot)):''}</div></div>`).join('');
+    comparison.slots.forEach((slot,index)=>{if(!slot.place&&slot.choices)renderComparisonChoices(index)});
+    $('#compareAdd').classList.toggle('hidden',comparison.slots.length===3);
+  }
+  function renderComparisonChoices(index){
+    const slot=comparison.slots[index],rows=slot.choices||[],box=$('#compareChoice'+index);
+    box.innerHTML=rows.length?'<strong>'+(slot.suggest?'Velg adresse · Kartverket':'Flere treff – velg riktig adresse:')+'</strong>'+rows.map((row,i)=>`<button type="button" data-choice="${i}">${esc(row.name)}</button>`).join(''):esc(slot.searchError);
+    box.querySelectorAll('[data-choice]').forEach(button=>button.addEventListener('click',()=>selectComparisonAddress(index,rows[Number(button.dataset.choice)])));
+  }
+  function selectComparisonAddress(index,row){
+    const slot=comparison.slots[index];clearTimeout(slot.suggestTimer);slot.searchRequest=(slot.searchRequest||0)+1;slot.place=row;slot.query=addressLabel(slot);slot.searchError='';slot.choices=null;
+    invalidateComparison();renderComparisonAddresses();drawComparisonAddresses();comparisonNotice('Adressen er valgt. Legg til neste adresse eller sammenlign.');
+  }
+  async function findComparisonAddress(index,suggest=false){
+    const slot=comparison.slots[index],query=slot.query.trim();clearTimeout(slot.suggestTimer);if(!query)return false;
+    const request=(slot.searchRequest||0)+1;slot.searchRequest=request;slot.searchError='';$('#compareChoice'+index).textContent='Søker etter adresse …';
+    try{
+      const rows=await api((suggest?'/api/address-suggestions?q=':'/api/geocode?q=')+encodeURIComponent(query));
+      if(comparison.slots[index]!==slot||slot.searchRequest!==request)return false;
+      if(rows.length===1&&!suggest){selectComparisonAddress(index,rows[0]);return true}
+      slot.choices=rows;slot.suggest=suggest;
+      slot.searchError=rows.length?'Velg ett av treffene for adresse '+String.fromCharCode(65+index)+'.':'Fant ikke adresse '+String.fromCharCode(65+index)+'. Prøv et mer presist søk.';
+      renderComparisonChoices(index);
+      return false;
+    }catch(error){if(comparison.slots[index]===slot&&slot.searchRequest===request){slot.searchError='Adresseoppslaget for '+String.fromCharCode(65+index)+' feilet. Prøv igjen.';$('#compareChoice'+index).textContent=slot.searchError}return false}
+  }
+  $('#compareAddresses').addEventListener('input',event=>{const form=event.target.closest('form[data-slot]');if(!form)return;const slot=comparison.slots[Number(form.dataset.slot)];slot.query=event.target.value;slot.place=null;slot.choices=null;slot.searchRequest=(slot.searchRequest||0)+1;clearTimeout(slot.suggestTimer);invalidateComparison();drawComparisonAddresses();$('#compareChoice'+form.dataset.slot).textContent=slot.query.trim().length<3?'Skriv minst tre tegn for adresseforslag.':'Søker etter adresseforslag …';if(slot.query.trim().length>=3)slot.suggestTimer=setTimeout(()=>{if(comparison.slots[Number(form.dataset.slot)]===slot)findComparisonAddress(Number(form.dataset.slot),true)},450)});
+  $('#compareAddresses').addEventListener('submit',event=>{event.preventDefault();const form=event.target.closest('form[data-slot]');if(form)$('#compareChoice'+form.dataset.slot).querySelector('[data-choice]')?.focus()});
+  $('#compareAddresses').addEventListener('click',event=>{if(event.target.closest('.compare-remove')){comparison.slots.pop();invalidateComparison();renderComparisonAddresses();drawComparisonAddresses()}});
+  $('#compareAdd').addEventListener('click',()=>{if(comparison.slots.length<3){comparison.slots.push({place:null,query:''});invalidateComparison();renderComparisonAddresses()}});
+  $('#compareSettings').addEventListener('input',event=>{if(event.target.type!=='number')return;if(event.target.valueAsNumber>100)event.target.value='100';invalidateComparison()});
+  function comparisonEnabled(key){return $('#compareEnable'+({nearby:'Nearby',fish:'Fish',bath:'Bath',cabins:'Cabins',hazards:'Hazards'})[key]).checked}
+  $('#compareSettings').addEventListener('change',event=>{
+    if(event.target.type!=='checkbox')return;
+    for(const key of ['Nearby','Fish','Bath','Cabins'])$('#compare'+key).disabled=!$('#compareEnable'+key).checked;
+    $('#compareCategories').querySelectorAll('input').forEach(input=>input.disabled=!comparisonEnabled('nearby'));
+    invalidateComparison();drawComparisonAddresses();
+  });
+  function showComparison(active){
+    if(areaSearch.active)leaveAreaSearch();
+    comparison.active=active;closeRoute();document.body.classList.toggle('comparison-mode',active);
+    $('#compareSetup').classList.toggle('hidden',!active);$('#compareResults').classList.toggle('hidden',!active);
+    $('#singleView').setAttribute('aria-pressed',String(!active));$('#compareView').setAttribute('aria-pressed',String(active));
+    if(active){
+      for(const [id,source] of [['compareNearby','nearbyRadius'],['compareFish','fishRadius'],['compareBath','bathRadius'],['compareCabins','cabinRadius']])if(!comparison.settings)$('#'+id).value=$('#'+source).value;
+      renderComparisonAddresses();drawComparisonAddresses();
+    }else{clearComparisonResultMarkers();comparison.markers.forEach(marker=>map.removeLayer(marker));comparison.markers=[];[pin,ring,...markers].filter(Boolean).forEach(layer=>layer.addTo(map));if(currentPlace)map.setView([currentPlace.lat,currentPlace.lon],12)}
+    setTimeout(()=>map.invalidateSize(),0);
+  }
+  $('#singleView').addEventListener('click',()=>showComparison(false));$('#compareView').addEventListener('click',()=>showComparison(true));
+  function drawComparisonAddresses(){
+    if(!comparison.active)return;
+    [pin,ring,...markers,...comparison.markers].filter(Boolean).forEach(layer=>map.removeLayer(layer));comparison.markers=[];
+    const points=[];comparison.slots.forEach((slot,i)=>{if(!slot.place)return;points.push([slot.place.lat,slot.place.lon]);const icon=L.divIcon({className:'compare-marker',html:`<span style="background:${comparisonColors[i]}">${String.fromCharCode(65+i)}</span>`,iconSize:[32,32],iconAnchor:[16,16]});comparison.markers.push(L.marker(points.at(-1),{icon}).addTo(map).bindPopup(esc(addressLabel(slot))))});
+    drawComparisonResults(true);
+  }
+  function clearComparisonResultMarkers(){comparison.resultMarkers.forEach(marker=>map.removeLayer(marker));comparison.resultMarkers=[]}
+  function fitSingleResults(){
+    if(comparison.active||routeTarget||!currentPlace||!Number.isFinite(currentPlace.lat)||!Number.isFinite(currentPlace.lon))return;
+    const points=[[currentPlace.lat,currentPlace.lon]];
+    for(const marker of markers){const point=marker.getLatLng?.();if(point&&Number.isFinite(point.lat)&&Number.isFinite(point.lng))points.push([point.lat,point.lng])}
+    map.fitBounds(points,{padding:[40,40],maxZoom:13});
+  }
+  function drawComparisonResults(fit=false){
+    if(!comparison.active)return;
+    [pin,ring,...markers].filter(Boolean).forEach(marker=>map.removeLayer(marker));
+    clearComparisonResultMarkers();
+    const entries=new Map();
+    if(comparison.settings)for(const row of comparisonRows()){
+      if(row.family==='hazards')continue;
+      const kind=row.family==='nearby'?'nearby':row.kind==='fish'?'fish':row.kind==='bath'?'bath':'hut';
+      comparison.slots.forEach((slot,slotIndex)=>{
+        if(!slot.place)return;
+        for(const item of comparisonCell(slot,row).items||[]){
+          if(!Number.isFinite(item.lat)||!Number.isFinite(item.lon))continue;
+          const key=kind+'|'+item.lat.toFixed(6)+'|'+item.lon.toFixed(6)+'|'+(item.name||item.tags?.name||'');
+          if(!entries.has(key))entries.set(key,{kind,item,origins:new Map()});
+          entries.get(key).origins.set(slotIndex,item);
+        }
+      });
+    }
+    const points=comparison.slots.filter(slot=>slot.place).map(slot=>[slot.place.lat,slot.place.lon]);
+    let index=0;
+    for(const entry of entries.values()){
+      const item=entry.item,marker=categoryMarker(item,entry.kind).addTo(map),popupIndex=index++;
+      const actions=[...entry.origins].map(([slotIndex,result])=>`<div>${String.fromCharCode(65+slotIndex)} · ${esc(addressLabel(comparison.slots[slotIndex]))} · ${result.distanceKm.toFixed(1)} km <button type="button" id="compare-map-route-${popupIndex}-${slotIndex}">Vis rute</button></div>`).join('');
+      marker.bindPopup('<b>'+esc(item.name||item.tags?.name||'Valgt sted')+'</b>'+actions);
+      marker.on?.('popupopen',()=>{for(const [slotIndex,result] of entry.origins)document.getElementById('compare-map-route-'+popupIndex+'-'+slotIndex)?.addEventListener('click',()=>showRoute(result,comparison.slots[slotIndex].place))});
+      comparison.resultMarkers.push(marker);points.push([item.lat,item.lon]);
+    }
+    if(fit&&points.length&&!routeTarget)map.fitBounds(points,{padding:[40,40],maxZoom:13});
+  }
+  function comparisonSettings(){
+    const fields=[['nearby','compareNearby'],['fish','compareFish'],['bath','compareBath'],['cabins','compareCabins']],settings={};
+    for(const [key,id] of fields){const input=$('#'+id);if(comparisonEnabled(key)&&!input.reportValidity())return null;settings[key]=comparisonEnabled(key)?Number(input.value):1}return settings;
+  }
+  async function runComparison(){
+    if(comparison.resolving)return;
+    if(!['nearby','fish','bath','cabins','hazards'].some(comparisonEnabled)){comparisonNotice('Velg minst én kategori som skal sammenlignes.');return}
+    if(comparisonEnabled('nearby')&&!['fish','bath','cabins','hazards'].some(comparisonEnabled)&&!$('#compareCategories').querySelector('input:checked')){comparisonNotice('Velg minst ett nærtilbud som skal sammenlignes.');return}
+    if(comparison.slots.length<2){comparisonNotice('Legg til minst to adresser.');return}
+    comparison.resolving=true;setComparisonBusy(true);
+    try{
+      for(let i=0;i<comparison.slots.length;i++){
+        const slot=comparison.slots[i];if(slot.place)continue;
+        if(!slot.query.trim()){comparisonNotice('Fyll inn adresse '+String.fromCharCode(65+i)+'.');$('#compareAddresses').querySelectorAll('form input')[i]?.focus();return}
+        comparisonNotice('Slår opp adresse '+String.fromCharCode(65+i)+' …');
+        if(!await findComparisonAddress(i)){
+          comparisonNotice(slot.searchError||'Adressen ble endret under søket. Prøv igjen.');
+          $('#compareChoice'+i)?.scrollIntoView({behavior:'smooth',block:'nearest'});return
+        }
+      }
+    }finally{comparison.resolving=false;setComparisonBusy(false)}
+    if(comparison.slots.some(slot=>!slot.place)){comparisonNotice('En adresse ble endret. Trykk sammenlign på nytt.');return}
+    const settings=comparisonSettings();if(!settings)return;
+    closeRoute();setComparisonBusy(true);const generation=++comparison.generation;comparison.settings=settings;comparisonNotice('Henter data. Hver kolonne oppdateres etter hvert som svarene kommer.');
+    comparison.slots.forEach(slot=>{slot.updated=null;slot.results=Object.fromEntries(['nearby','hazards','waters','cabins'].map(key=>[key,{state:'loading'}]))});renderComparison();drawComparisonAddresses();
+    const jobs=comparison.slots.flatMap(slot=>{
+      const point='lat='+slot.place.lat+'&lon='+slot.place.lon;
+      const paths={nearby:'/api/nearby?'+point+'&radius='+settings.nearby*1000,hazards:'/api/hazards?'+point,waters:'/api/waters?'+point+'&fishRadius='+settings.fish+'&bathRadius='+settings.bath,cabins:'/api/cabins?'+point+'&radius='+settings.cabins*1000};
+      return Object.entries(paths).filter(([key])=>key==='waters'?(comparisonEnabled('fish')||comparisonEnabled('bath')):comparisonEnabled(key)).map(async([key,path])=>{
+        try{const data=await api(path);if(generation!==comparison.generation)return;slot.results[key]={state:'ok',data}}
+        catch(error){if(generation!==comparison.generation)return;slot.results[key]={state:'error'}}
+        if(generation===comparison.generation){slot.updated=new Date().toLocaleTimeString('nb-NO',{hour:'2-digit',minute:'2-digit'});renderComparison()}
+      });
+    });
+    await Promise.allSettled(jobs);if(generation!==comparison.generation)return;
+    setComparisonBusy(false);drawComparisonResults(true);comparisonNotice('Sammenligningen er oppdatert. Åpne en rad for detaljer.');
+  }
+  $('#compareRun').addEventListener('click',runComparison);$('#compareDifferences').addEventListener('change',()=>renderComparison());
+  $('#compareCategories').innerHTML=nearbyGroups.map(([key,label])=>`<label class="nearby-option"><input type="checkbox" value="${key}" disabled><span>${label}</span></label>`).join('');
+  $('#compareCategories').addEventListener('change',()=>renderComparison());
+  function compareUnknown(result){return !result||result.state==='error'?'Ikke tilgjengelig':result.state==='loading'?'Henter …':null}
+  function comparisonRows(){
+    const rows=[];const categories=new Set([...$('#compareCategories').querySelectorAll('input:checked')].map(input=>input.value));
+    for(const [kind,label] of nearbyGroups)if(comparisonEnabled('nearby')&&categories.has(kind))rows.push({key:'nearby-'+kind,label,group:'Nærtilbud',family:'nearby',kind});
+    for(const [kind,label] of [['floods','Flomhendelser (siste 10 år)'],['clay','Kvikkleire'],['landslide','Jordskred'],['snow','Snøskred'],['radon','Radon']])rows.push({key:'hazard-'+kind,label,group:'Grunnforhold og naturfare',family:'hazards',kind});
+    rows.push({key:'fish',label:'Fiskevann',group:'Fiske og bading',family:'waters',kind:'fish'},{key:'bath',label:'Badevann',group:'Fiske og bading',family:'waters',kind:'bath'},{key:'cabins',label:'DNT-hytter',group:'DNT',family:'cabins',kind:'cabins'});
+    return rows.filter(row=>row.family==='hazards'?comparisonEnabled('hazards'):(row.family==='nearby'?comparisonEnabled('nearby'):comparisonEnabled(row.kind)));
+  }
+  function comparisonCell(slot,row){
+    const result=slot.results?.[row.family],unknown=compareUnknown(result);
+    if(unknown)return {text:unknown,unknown:true,signature:unknown,items:[]};
+    const data=result.data,errors=data.errors||{};
+    if(row.family==='hazards'){
+      const value=data[row.kind];if(!value||errors[row.kind])return {text:'Ikke tilgjengelig',unknown:true,items:[]};
+      let text,detail;
+      if(row.kind==='floods'){text=value.recentCount+' registrerte hendelser';detail=value.lastRecent?.date?'Siste hendelse: '+value.lastRecent.date:'Ingen stedfestede flomhendelser funnet i perioden. Dette er ikke en full risikovurdering.'}
+      else if(row.kind==='radon'){text=({green:'Lav aktsomhet',orange:'Moderat aktsomhet',red:'Høy aktsomhet'})[value.level]||'Ingen klassifisering';detail='Aktsomhet fra områdekart.'}
+      else{text=value.count>0?(row.kind==='clay'?'Påvist i kartlaget':'Innenfor aktsomhetsområde'):'Ingen treff i kartlaget';detail=value.riskClass?'Risikoklasse '+value.riskClass+' av 5':'Kartregistrering ved det valgte punktet.'}
+      return {text,detail,items:[],signature:text+'|'+detail};
+    }
+    let items=[],partial=false;
+    if(row.family==='nearby'){
+      const source=row.kind==='transit'?'transit':'osm';if(errors[source])return {text:'Ikke tilgjengelig',unknown:true,items:[]};
+      items=(data.elements||[]).map(x=>{const p=x.nearbyPoint||(x.type==='node'?x:x.center||{});return {...x,lat:p.lat,lon:p.lon,kind:x.kind||typeFor(x.tags||{}),name:x.tags?.name||labelFor(row.kind)}}).filter(x=>x.kind===row.kind&&Number.isFinite(x.lat)&&Number.isFinite(x.lon)).map(x=>({...x,distanceKm:distance(slot.place.lat,slot.place.lon,x.lat,x.lon)})).filter(x=>x.distanceKm<=comparison.settings.nearby).sort((a,b)=>a.distanceKm-b.distanceKm);
+    }else if(row.family==='waters'){
+      items=row.kind==='fish'?data.waters||[]:data.bathing||[];
+      partial=row.kind==='fish'?Boolean(errors.lakes||errors.fish||errors.permits):Boolean(errors.places);
+    }else{items=data.cabins||[];partial=Boolean(errors.ut||errors.osm)}
+    if(partial&&!items.length)return {text:'Ikke tilgjengelig',unknown:true,items:[]};
+    const nearest=items[0],text=items.length+' treff'+(nearest?' · nærmest '+nearest.distanceKm.toFixed(1)+' km':'')+(partial?' · delvis datagrunnlag':'');
+    return {text,items,partial,signature:JSON.stringify(items.map(item=>[item.name,Number(item.distanceKm.toFixed(1))]))};
+  }
+  function comparisonDetail(cell,row,slotIndex){
+    if(cell.unknown)return '';
+    if(row.family==='hazards'){
+      const place=comparison.slots[slotIndex].place,max=20037508.342789244;
+      const topics={floods:'Flomhendelser',clay:'kvikkleire',landslide:'jordflomskredaktsomhet',snow:'snoskredaktsomhet'};
+      const params=new URLSearchParams({point:'1',x:String(Math.round(place.lon*max/180)),y:String(Math.round(Math.log(Math.tan((90+place.lat)*Math.PI/360))/(Math.PI/180)*max/180)),zoom:'13',wkid:'3857'});
+      const href=row.kind==='radon'?'https://www.ngu.no/geologiske-kart/karttjenester':'https://temakart.nve.no/tema/'+topics[row.kind]+'?'+params;
+      return '<p>'+esc(cell.detail)+'</p><a href="'+esc(href)+'" target="_blank" rel="noreferrer">Detaljer ↗</a>';
+    }
+    if(!cell.items.length)return '<p>Ingen registrerte treff med disse innstillingene.</p>';
+    return '<ul class="compare-detail-list">'+cell.items.map((item,i)=>{
+      const name=row.family==='nearby'?nearbyName(item,row.kind):esc(item.name);
+      const fish=row.kind==='fish'?((item.species||[]).length?'<details class="fish-dropdown"><summary>Fisketyper</summary><div class="fish-options">'+fishSpeciesMarkup(item.species)+'</div></details>':'<small>Fisketyper: ikke tilgjengelig</small>'):'';
+      const bath=row.kind==='bath'?'<small>Vannkvalitet: ikke tilgjengelig · Vanntemperatur: ikke tilgjengelig</small>':'';
+      const permit=row.kind==='fish'&&item.permitUrl?`<a href="${esc(item.permitUrl)}" target="_blank" rel="noreferrer">Kjøp fiskekort ↗</a>`:'';
+      const booking=row.family==='cabins'?`<a href="${esc(item.bookingUrl||cabinBookingUrl(item))}" target="_blank" rel="noreferrer">Sjekk ledighet ↗</a>`:'';
+      return `<li><span>${name}</span><small>${item.distanceKm.toFixed(1)} km</small><button type="button" data-compare-route="${slotIndex}|${row.key}|${i}">Vis på kart</button>${permit}${booking}${fish}${bath}</li>`;
+    }).join('')+'</ul>';
+  }
+  function renderComparison(){
+    if(!comparison.settings)return;
+    drawComparisonResults();
+    const onlyDifferences=$('#compareDifferences').checked,rows=comparisonRows();let previousGroup='',count=0;
+    const body=rows.map(row=>{
+      const cells=comparison.slots.map(slot=>comparisonCell(slot,row));
+      const equal=onlyDifferences&&cells.every(cell=>!cell.unknown&&!cell.partial)&&new Set(cells.map(cell=>cell.signature)).size===1;
+      ++count;const group=row.group!==previousGroup?`<tr class="compare-group"><th colspan="${comparison.slots.length+1}">${row.group}</th></tr>`:'';previousGroup=row.group;
+      if(equal)return group+`<tr class="compare-equal"><th scope="row">${row.label}</th><td colspan="${comparison.slots.length}">Ingen forskjeller mellom adressene · ${esc(cells[0].text)}</td></tr>`;
+      const expanded=comparison.expanded.has(row.key);
+      return group+`<tr><th scope="row"><button type="button" data-compare-expand="${row.key}" aria-expanded="${expanded}">${expanded?'▾':'▸'} ${row.label}</button></th>`+cells.map((cell,i)=>`<td><div class="compare-summary ${cell.unknown?'compare-unknown':''}">${esc(cell.text)}</div>${expanded?comparisonDetail(cell,row,i):''}</td>`).join('')+'</tr>';
+    }).join('');
+    $('#compareTable').innerHTML=`<table class="compare-table"><caption>Sammenligning med like søkeradier</caption><thead><tr><th scope="col">Opplysninger</th>${comparison.slots.map((slot,i)=>`<th scope="col"><span style="color:${comparisonColors[i]}">${String.fromCharCode(65+i)} · ${esc(addressLabel(slot))}</span><small>${slot.updated?'Siste svar '+slot.updated:'Henter data …'}</small></th>`).join('')}</tr></thead><tbody>${body||`<tr><td colspan="${comparison.slots.length+1}">Ingen forskjeller i de viste opplysningene.</td></tr>`}</tbody></table>`;
+  }
+  $('#compareTable').addEventListener('click',event=>{
+    const expand=event.target.closest('[data-compare-expand]');if(expand){const key=expand.dataset.compareExpand;comparison.expanded.has(key)?comparison.expanded.delete(key):comparison.expanded.add(key);renderComparison();return}
+    const button=event.target.closest('[data-compare-route]');if(button){const [index,key,itemIndex]=button.dataset.compareRoute.split('|'),row=comparisonRows().find(row=>row.key===key),slot=comparison.slots[Number(index)];const item=comparisonCell(slot,row).items[Number(itemIndex)];showRoute(item,slot.place)}
+  });
+
+
+  const areaKeys=['school','kindergarten','shop','bath','fish','hazards'];
+  const areaLabels={school:'Skole',kindergarten:'Barnehage',shop:'Matbutikk',bath:'Badevann',fish:'Fiskevann',hazards:'Grunnforhold og naturfare'};
+  const areaSearch={active:false,generation:0,rows:[],markers:[],rules:[],municipalities:null,busy:false};
+  function areaBusy(busy){areaSearch.busy=busy;$('#areaSpinner').classList.toggle('hidden',!busy);$('#areaStop').classList.toggle('hidden',!busy);$('#areaRun').disabled=busy;$('#areaRun').setAttribute('aria-busy',String(busy));$('#areaProgress').classList.toggle('hidden',!busy)}
+  function clearAreaMarkers(){areaSearch.mapGeneration=(areaSearch.mapGeneration||0)+1;if(areaSearch.cluster){map.removeLayer(areaSearch.cluster);areaSearch.cluster.clearLayers();areaSearch.cluster=null}areaSearch.markers.forEach(m=>map.removeLayer(m));areaSearch.markers=[];areaSearch.markerBuffer=[];areaSearch.openDetailIndex=null;$('#areaDetailPanel').classList.add('hidden')}
+  function stopAreaSearch(){++areaSearch.generation;if(areaSearch.coverage)areaSearch.coverage.interrupted=true;areaBusy(false);$('#areaStatus').textContent='Søket er stoppet. Bare ferdig undersøkte punkter vises.';renderAreaResults()}
+  function leaveAreaSearch(refresh=true){
+    ++areaSearch.generation;areaBusy(false);areaSearch.active=false;clearAreaMarkers();document.body.classList.remove('area-mode');$('#areaSetup').classList.add('hidden');$('#areaView').setAttribute('aria-pressed','false');if(refresh&&areaSearch.refreshOnExit&&currentPlace&&typeof choose==='function')choose(currentPlace);$('#mapTitle').textContent=currentPlace?currentPlace.name.split(',').slice(0,2).join(','):'Kart over området';
+  }
+  async function showAreaSearch(){
+    showComparison(false);++nearbyRequest;++waterRequest;++cabinRequest;areaSearch.refreshOnExit=Boolean(currentPlace);areaSearch.active=true;document.body.classList.add('area-mode');$('#areaSetup').classList.remove('hidden');$('#singleView').setAttribute('aria-pressed','false');$('#areaView').setAttribute('aria-pressed','true');
+    [pin,ring,...markers].filter(Boolean).forEach(m=>map.removeLayer(m));$('#mapTitle').textContent='Steder som passer til deg';drawAreaResults();
+    if(areaSearch.municipalities)return;
+    $('#areaStatus').textContent='Henter kommuner fra Kartverket …';
+    try{
+      const data=await api('/api/area-municipalities');data.sort((a,b)=>a.name.localeCompare(b.name,'nb'));areaSearch.municipalities=data;
+      $('#areaMunicipality').innerHTML='<option value="">Velg kommune</option>'+data.map(x=>`<option value="${esc(x.code)}">${esc(x.name)}</option>`).join('');$('#areaStatus').textContent='';
+    }catch(error){$('#areaMunicipality').innerHTML='<option value="">Kommunelisten er ikke tilgjengelig</option>';$('#areaStatus').textContent='Områdesøket krever oppdatert server. Kjør Start app.cmd og last siden på nytt. Hvis serveren er oppdatert, prøv igjen om litt.'}
+  }
+  function setAreaPlaceLoading(busy){$('#areaPlaceSpinner').classList.toggle('hidden',!busy);$('#areaLocality').setAttribute('aria-busy',String(busy))}
+  async function loadAreaPlaces(){
+    const code=$('#areaMunicipality').value,request=(areaSearch.placeRequest||0)+1;areaSearch.placeRequest=request;
+    areaSearch.places=new Map();const field=$('#areaLocality');field.disabled=true;field.innerHTML='<option value="">'+(code?'Henter stedsnavn …':'Velg kommune først')+'</option>';$('#areaPlaceNotice').textContent=code?'Henter tettsteder og lokalområder …':'';
+    setAreaPlaceLoading(Boolean(code));if(!code)return;
+    try{
+      const places=await api('/api/area-places?'+new URLSearchParams({municipality:code}));
+      if(request!==areaSearch.placeRequest||$('#areaMunicipality').value!==code)return;
+      if(!Array.isArray(places))throw Error('Ukjent stedsnavnformat');
+      places.sort((a,b)=>a.name.localeCompare(b.name,'nb'));areaSearch.places=new Map(places.map(p=>[p.id,p]));
+      const options=places.map(p=>`<option value="${esc(p.id)}" ${p.lat===null||p.lon===null?'disabled':''}>${esc(p.name)}</option>`).join('');
+      field.innerHTML='<option value="">Velg sted</option>'+options;field.disabled=!places.length;
+      $('#areaPlaceNotice').textContent=places.length?`${places.length} unike stedsnavn.`:'Ingen registrerte steder ble funnet i kommunen.';
+    }catch(error){if(request!==areaSearch.placeRequest)return;field.innerHTML='<option value="">Stedslisten kunne ikke hentes</option>';$('#areaPlaceNotice').textContent='Stedsnavn kunne ikke hentes. Prøv igjen, eller kjør Start app.cmd hvis serveren ikke er oppdatert.'}finally{if(request===areaSearch.placeRequest)setAreaPlaceLoading(false)}
+  }
+  function areaRules(){
+    const result=[];
+    for(const key of areaKeys){if(!$('#areaEnable-'+key).checked)continue;
+      const field=key==='hazards'?null:$('#areaRadius-'+key);if(field&&!field.reportValidity())return null;
+      result.push({key,priority:$('#areaPriority-'+key).value,radius:field?Number(field.value):null})
+    }return result;
+  }
+  function areaPolygonDistance(point,geometry){
+    const lat=point.lat,lon=point.lon,cos=Math.max(.01,Math.cos(lat*Math.PI/180));let best=Infinity,inside=false;
+    for(const ring of geometry?.rings||[]){let ringInside=false;
+      for(let i=0;i<ring.length;i++){
+        const a=ring[i],b=ring[(i+1)%ring.length];
+        if((a[1]>lat)!==(b[1]>lat)&&lon<(b[0]-a[0])*(lat-a[1])/(b[1]-a[1])+a[0])ringInside=!ringInside;
+        const ax=(a[0]-lon)*111.32*cos,ay=(a[1]-lat)*111.32,bx=(b[0]-lon)*111.32*cos,by=(b[1]-lat)*111.32,dx=bx-ax,dy=by-ay;
+        const t=Math.max(0,Math.min(1,-(ax*dx+ay*dy)/(dx*dx+dy*dy||1)));best=Math.min(best,Math.hypot(ax+t*dx,ay+t*dy));
+      }if(ringInside)inside=!inside;
+    }return inside?0:best;
+  }
+  const areaSpatialIndexes=new WeakMap();
+  function areaGrid(points){
+    const cells=new Map();for(const p of points){const key=Math.floor(p.lat/.02)+','+Math.floor(p.lon/.04);if(!cells.has(key))cells.set(key,[]);cells.get(key).push(p)}return {points,cells};
+  }
+  function prepareAreaIndex(data){
+    if(areaSpatialIndexes.has(data))return areaSpatialIndexes.get(data);
+    const groups={school:[],kindergarten:[],shop:[],bath:[],fish:[]};
+    for(const item of data.elements||[]){const kind=typeFor(item.tags||{}),p=item.type==='node'?item:item.center;if(groups[kind]&&p&&Number.isFinite(p.lat)&&Number.isFinite(p.lon))groups[kind].push({lat:p.lat,lon:p.lon,name:item.tags?.name||areaLabels[kind]})}
+    groups.bath=(data.bathing||[]).filter(p=>Number.isFinite(p.lat)&&Number.isFinite(p.lon));
+    for(const p of data.waters||[]){let minLat=Infinity,maxLat=-Infinity,minLon=Infinity,maxLon=-Infinity;for(const ring of p.geometry?.rings||[])for(const xy of ring){minLat=Math.min(minLat,xy[1]);maxLat=Math.max(maxLat,xy[1]);minLon=Math.min(minLon,xy[0]);maxLon=Math.max(maxLon,xy[0])}groups.fish.push({...p,bounds:{minLat,maxLat,minLon,maxLon}})}
+    const index={fish:groups.fish};for(const key of ['school','kindergarten','shop','bath'])index[key]=areaGrid(groups[key]);areaSpatialIndexes.set(data,index);return index;
+  }
+  function areaQueryBounds(point,km){const lat=km/110,cos=Math.max(.01,Math.cos(Math.min(89.9,Math.abs(point.lat)+lat)*Math.PI/180)),lon=km/(110*cos);return {minLat:point.lat-lat,maxLat:point.lat+lat,minLon:point.lon-lon,maxLon:point.lon+lon}}
+  function areaGridCandidates(grid,bounds){
+    const y0=Math.floor(bounds.minLat/.02),y1=Math.floor(bounds.maxLat/.02),x0=Math.floor(bounds.minLon/.04),x1=Math.floor(bounds.maxLon/.04);
+    if((y1-y0+1)*(x1-x0+1)>grid.points.length*4)return grid.points;
+    const found=[];for(let y=y0;y<=y1;y++)for(let x=x0;x<=x1;x++){const cell=grid.cells.get(y+','+x);if(cell)found.push(...cell)}return found;
+  }
+  function areaDistanceCheck(point,rule,data,center){
+    const errors=data.errors||{},index=prepareAreaIndex(data),bounds=areaQueryBounds(point,rule.radius);let targets,failed;
+    if(rule.key==='fish'){targets=index.fish.filter(p=>p.bounds.maxLat>=bounds.minLat&&p.bounds.minLat<=bounds.maxLat&&p.bounds.maxLon>=bounds.minLon&&p.bounds.minLon<=bounds.maxLon);failed=Boolean(errors.waters||errors.lakes||errors.permits||data.fishingComplete!==true)}
+    else{targets=areaGridCandidates(index[rule.key],bounds);failed=Boolean(rule.key==='bath'?(errors.waters||errors.places):errors.nearby)}
+    let nearest=null,km=Infinity;for(const target of targets){const d=rule.key==='fish'?areaPolygonDistance(point,target.geometry):distance(point.lat,point.lon,target.lat,target.lon);if(d<km){km=d;nearest=target}}
+    const covered=distance(point.lat,point.lon,center.lat,center.lon)+rule.radius<=data.radiusKm+.001,state=km<=rule.radius?'pass':failed||!covered?'unknown':'fail';
+    return {key:rule.key,state,km:Number.isFinite(km)?km:null,name:nearest?.name||null,text:state==='unknown'?'Uavklart datagrunnlag':state==='pass'?`${nearest.name} · ${km.toFixed(1)} km`:'Ingen dokumenterte treff innenfor avstanden'};
+  }
+  function areaPointChecks(point,rules,data,center){
+    const key=point.lat+','+point.lon;if(areaSearch.checkCache?.has(key))return areaSearch.checkCache.get(key).slice();
+    const checks=rules.map(rule=>areaDistanceCheck(point,rule,data,center));
+    if(areaSearch.checkCache){if(areaSearch.checkCache.size>=20000)areaSearch.checkCache.delete(areaSearch.checkCache.keys().next().value);areaSearch.checkCache.set(key,checks)}return checks.slice();
+  }
+  function areaHazardCheck(data){
+    const keys=['floods','clay','landslide','snow','radon'];
+    if(keys.some(k=>!data[k]||data.errors?.[k]))return {key:'hazards',state:'unknown',text:'Ett eller flere kartlag er uavklart'};
+    if(!Number.isFinite(data.floods.recentCount)||['clay','landslide','snow'].some(k=>!Number.isFinite(data[k].count))||!['green','orange','red'].includes(data.radon.level))return {key:'hazards',state:'unknown',text:'Kartlagene mangler klassifisering'};
+    const signals=[];
+    if(data.floods.recentCount>0||data.floods.historicalCount>0)signals.push('flomhendelse');
+    for(const [key,label] of [['clay','kvikkleire'],['landslide','jordskred'],['snow','snøskred']])if(data[key].count>0)signals.push(label);
+    if(data.radon.level!=='green')signals.push('radon');
+    return {key:'hazards',state:signals.length?'fail':'pass',text:signals.length?'Registrerte signaler: '+signals.join(', '):'Ingen registrerte faresignaler i de undersøkte kartlagene'};
+  }
+  function areaVerdict(row){
+    const must=areaSearch.rules.filter(r=>r.priority==='must').map(r=>row.checks.find(c=>c.key===r.key));
+    if(must.some(c=>c?.state==='fail'))return 'fail';
+    if(must.some(c=>!c||c.state==='unknown'))return 'unknown';return 'pass';
+  }
+  function areaWishScore(row){return areaSearch.rules.filter(r=>r.priority==='wish'&&row.checks.some(c=>c.key===r.key&&c.state==='pass')).length}
+  function areaAllWishes(row){return areaSearch.rules.filter(r=>r.priority==='wish').every(r=>row.checks.some(c=>c.key===r.key&&c.state==='pass'))}
+  const areaHouseSvg='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 11 12 2l10 9-2 2-1-1v10h-5v-7h-4v7H5V12l-1 1z"/></svg>';
+  const areaHouseIcons=new Map();
+  function areaHouseIcon(orange){if(!areaHouseIcons.has(orange))areaHouseIcons.set(orange,L.divIcon({className:'area-house-icon',html:`<span class="area-house ${orange?'orange':''}">${areaHouseSvg}</span>`,iconSize:[30,30],iconAnchor:[15,15]}));return areaHouseIcons.get(orange)}
+  function renderAreaResults(){
+    // Search results belong on the map; never render a second, conflicting result list.
+    if(areaSearch.active&&!areaSearch.busy)drawAreaResults();
+  }
+  function createAreaCluster(){
+    if(!L.markerClusterGroup)return null;
+    return L.markerClusterGroup({showCoverageOnHover:false,removeOutsideVisibleBounds:true,spiderfyOnMaxZoom:true,chunkedLoading:false,maxClusterRadius:40,animate:false,
+      iconCreateFunction:cluster=>L.divIcon({className:'area-house-icon',html:`<span class="area-house-cluster" style="background:${cluster.getAllChildMarkers().some(m=>m.options.areaOrange)?'#c57a16':'#28785b'}" title="${cluster.getChildCount()} treff – klikk for å zoome inn">${cluster.getChildCount()}</span>`,iconSize:[38,38],iconAnchor:[19,19]})});
+  }
+  function flushAreaMarkers(){
+    if(!areaSearch.active)return;
+    const pending=areaSearch.markerBuffer?.splice(0)||[];if(!pending.length)return;
+    const generation=areaSearch.generation;const added=pending.map(row=>{const marker=L.marker([row.point.lat,row.point.lon],{icon:areaHouseIcon(!areaAllWishes(row)),title:row.point.name,riseOnHover:true,areaOrange:!areaAllWishes(row)});marker.on?.('click',()=>{if(generation===areaSearch.generation)showAreaDetails(row.index)});return marker});
+    if(areaSearch.cluster)areaSearch.cluster.addLayers(added);else for(const marker of added){marker.addTo(map);areaSearch.markers.push(marker)}
+  }
+  function queueAreaMarker(row){if(areaVerdict(row)!=='pass'||!areaSearch.active)return;areaSearch.markerBuffer.push(row);const now=Date.now();if(areaSearch.markerBuffer.length>=50||now-(areaSearch.lastMarkerFlush||0)>250){areaSearch.lastMarkerFlush=now;flushAreaMarkers()}}
+  function drawAreaResults(){
+    clearAreaMarkers();areaSearch.cluster=createAreaCluster();if(areaSearch.cluster)areaSearch.cluster.addTo(map);areaSearch.markerBuffer=[];
+    const visible=areaSearch.rows.filter(row=>row.complete&&areaVerdict(row)==='pass'),generation=areaSearch.mapGeneration;
+    async function addBatches(){for(let i=0;i<visible.length;i+=50){if(generation!==areaSearch.mapGeneration||!areaSearch.active)return;areaSearch.markerBuffer.push(...visible.slice(i,i+50));flushAreaMarkers();if(i+50<visible.length)await new Promise(resolve=>setTimeout(resolve,0))}}addBatches();
+    const scope=areaSearch.coverage;
+    if(scope?.scopeCenter&&scope.scopeRadiusKm&&L.circle){const circle=L.circle([scope.scopeCenter.lat,scope.scopeCenter.lon],{radius:scope.scopeRadiusKm*1000,color:'#7f9dad',weight:1,fillOpacity:0}).addTo(map);areaSearch.markers.push(circle);if(circle.getBounds)map.fitBounds(circle.getBounds(),{padding:[35,35]})}
+  }
+  function showAreaDetails(index){
+    const row=areaSearch.rows[index];if(!row?.complete||areaVerdict(row)!=='pass')return;
+    const panel=$('#areaDetailPanel');
+    if(areaSearch.openDetailIndex===index&&!panel.classList.contains('hidden')){panel.classList.add('hidden');areaSearch.openDetailIndex=null;return}
+    areaSearch.openDetailIndex=index;
+    const wishes=areaSearch.rules.filter(r=>r.priority==='wish').length;
+    let html=`<div class="area-detail-address">${esc(row.point.name)}</div><p>Alle må-krav er oppfylt.${wishes?' '+areaWishScore(row)+' av '+wishes+' ønsker oppfylt.':''}</p>`;
+    for(const check of row.checks){const rule=areaSearch.rules.find(r=>r.key===check.key);html+=`<div class="area-detail-check"><strong>${check.state==='pass'?'✓':check.state==='unknown'?'?':'○'} ${areaLabels[check.key]}</strong>${esc(check.text)}<div class="sub">${rule?.priority==='must'?'Må oppfylles':'Ønskelig'}${rule?.radius?' · innenfor '+rule.radius+' km':''}</div></div>`}
+    $('#areaDetailBody').innerHTML=html+`<button class="area-open" type="button" data-area-detail-open="${row.index}">Undersøk stedet</button>`;
+    $('#areaDetailPanel').classList.remove('hidden','minimized');$('#areaDetailMinimize').setAttribute('aria-label','Minimer detaljer');$('#areaDetailMinimize').textContent='−';$('#areaDetailMinimize').setAttribute('aria-expanded','true');clampAreaDetails();
+  }
+  function moveAreaDetails(left,top){const panel=$('#areaDetailPanel'),wrap=$('#mapWrap');panel.style.maxHeight=Math.max(80,wrap.clientHeight-8)+'px';$('#areaDetailBody').style.maxHeight=Math.max(40,wrap.clientHeight-$('#areaDetailHandle').offsetHeight-30)+'px';panel.style.left=Math.max(0,Math.min(left,Math.max(0,wrap.clientWidth-panel.offsetWidth)))+'px';panel.style.top=Math.max(0,Math.min(top,Math.max(0,wrap.clientHeight-panel.offsetHeight)))+'px';panel.style.right='auto'}
+  function clampAreaDetails(){if($('#areaDetailPanel').classList.contains('hidden'))return;const p=$('#areaDetailPanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();moveAreaDetails(p.left-w.left,p.top-w.top)}
+  let areaDetailDrag=null;
+  if(L.DomEvent){L.DomEvent.disableClickPropagation($('#areaDetailPanel'));L.DomEvent.disableScrollPropagation($('#areaDetailPanel'))}
+  $('#areaDetailPanel').addEventListener('pointerdown',event=>event.stopPropagation());$('#areaDetailPanel').addEventListener('dblclick',event=>event.stopPropagation());
+  $('#areaDetailHandle').addEventListener('pointerdown',event=>{if(event.target.closest('button')||event.button!==0)return;const p=$('#areaDetailPanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();areaDetailDrag={id:event.pointerId,x:event.clientX,y:event.clientY,left:p.left-w.left,top:p.top-w.top};event.currentTarget.setPointerCapture(event.pointerId);event.preventDefault();event.stopPropagation()});
+  $('#areaDetailHandle').addEventListener('pointermove',event=>{if(areaDetailDrag?.id!==event.pointerId)return;moveAreaDetails(areaDetailDrag.left+event.clientX-areaDetailDrag.x,areaDetailDrag.top+event.clientY-areaDetailDrag.y);event.preventDefault();event.stopPropagation()});
+  for(const type of ['pointerup','pointercancel'])$('#areaDetailHandle').addEventListener(type,event=>{if(areaDetailDrag?.id===event.pointerId){areaDetailDrag=null;if(event.currentTarget.hasPointerCapture(event.pointerId))event.currentTarget.releasePointerCapture(event.pointerId)}});
+  $('#areaDetailHandle').addEventListener('keydown',event=>{if(event.target!==event.currentTarget)return;const delta={ArrowLeft:[-20,0],ArrowRight:[20,0],ArrowUp:[0,-20],ArrowDown:[0,20]}[event.key];if(delta){event.preventDefault();event.stopPropagation();const p=$('#areaDetailPanel').getBoundingClientRect(),w=$('#mapWrap').getBoundingClientRect();moveAreaDetails(p.left-w.left+delta[0],p.top-w.top+delta[1])}});
+  $('#areaDetailMinimize').addEventListener('click',()=>{const panel=$('#areaDetailPanel');panel.classList.toggle('minimized');const min=panel.classList.contains('minimized');$('#areaDetailMinimize').textContent=min?'+':'−';$('#areaDetailMinimize').setAttribute('aria-expanded',String(!min));$('#areaDetailMinimize').setAttribute('aria-label',min?'Gjenopprett detaljer':'Minimer detaljer');clampAreaDetails()});
+  $('#areaDetailClose').addEventListener('click',()=>{$('#areaDetailPanel').classList.add('hidden');areaSearch.openDetailIndex=null});
+  $('#areaDetailBody').addEventListener('click',event=>{const button=event.target.closest('[data-area-detail-open]');if(!button)return;const row=areaSearch.rows[Number(button.dataset.areaDetailOpen)];if(!row)return;leaveAreaSearch(false);showComparison(false);$('#placeInput').value=row.point.name;currentPlaceQuery=row.point.name;choose(row.point)});
+  function areaStatusText(stage,done,total,pending=0){
+    const distanceLabels=areaSearch.rules.filter(r=>r.key!=='hazards').map(r=>areaLabels[r.key]);
+    const selected=areaSearch.rules.map(r=>areaLabels[r.key]);
+    const criteria=selected.length?selected.join(', '):'ingen valgte kriterier';
+    if(stage==='addresses')return `Henter adresser for søket · kriterier: ${criteria}`;
+    if(stage==='context')return `Henter data for ${distanceLabels.join(', ')}`;
+    const active=[];
+    if(distanceLabels.length)active.push('vurderer '+distanceLabels.join(', '));
+    if(areaSearch.rules.some(r=>r.key==='hazards')&&pending)active.push(`kontrollerer grunnforhold og naturfare (${pending} oppslag pågår${areaSearch.hazardChecked?', '+areaSearch.hazardChecked+' ferdig':''})`);
+    else if(areaSearch.hazardChecked)active.push(`naturfareoppslag fullført: ${areaSearch.hazardChecked}${areaSearch.hazardSkipped?', '+areaSearch.hazardSkipped+' hoppet over':''}`);
+    else if(areaSearch.hazardSkipped)active.push(`naturfareoppslag hoppet over for ${areaSearch.hazardSkipped} adresser som ikke oppfylte andre må-krav`);
+    return `Undersøkt ${done} av ${total} adresser${active.length?' · '+active.join(' · '):''}`;
+  }
+  async function runAreaSearch(){
+    const code=$('#areaMunicipality').value,locality=$('#areaLocality').value.trim(),rules=areaRules();if(!rules)return;if(!code){$('#areaStatus').textContent='Velg en kommune først.';return}if(!locality){$('#areaStatus').textContent='Velg et sted fra listen.';$('#areaLocality').focus();return}if(!rules.length){$('#areaStatus').textContent='Velg minst ett kriterium.';return}
+    const scopeRadius=3;
+    const request=++areaSearch.generation;areaSearch.rules=rules;areaSearch.rows=[];areaSearch.coverage=null;areaSearch.checkCache=new Map();clearAreaMarkers();if(areaSearch.active){areaSearch.cluster=createAreaCluster();if(areaSearch.cluster)areaSearch.cluster.addTo(map)};areaBusy(true);$('#areaProgress').value=0;$('#areaStatus').textContent=areaStatusText('addresses');
+    try{
+      const sample=await api('/api/area-place-candidates?'+new URLSearchParams({municipality:code,place:locality,scopeRadius:String(scopeRadius)}));if(request!==areaSearch.generation)return;
+      if(sample.mode!=='place-addresses-v3')throw Error('Oppdater serveren med Start app.cmd for å bruke stedsliste og geografisk søkeområde.');
+      if(sample.tooLarge)throw Error('Adressetjenesten når grensen på 10 000 treff. Velg et annet stedsnavn i kommunen.')
+      const points=sample.candidates;areaSearch.coverage={...sample,candidates:undefined,candidateCount:points.length};if(!points.length)throw Error('Ingen adresser funnet innenfor området i valgt kommune. Velg et annet stedsnavn i kommunen.');
+      const center={lat:points.reduce((n,p)=>n+p.lat,0)/points.length,lon:points.reduce((n,p)=>n+p.lon,0)/points.length};
+      const extent=Math.max(...points.map(p=>distance(p.lat,p.lon,center.lat,center.lon))),distanceRules=rules.filter(r=>r.key!=='hazards'),radius=Math.min(100,Math.max(1,Math.ceil(extent+Math.max(0,...distanceRules.map(r=>r.radius)))));
+      $('#areaStatus').textContent=areaStatusText(distanceRules.length?'context':'evaluate',0,points.length);$('#areaProgress').value=10;
+      const flags={nearby:rules.some(r=>['school','kindergarten','shop'].includes(r.key))?'1':'0',fish:rules.some(r=>r.key==='fish')?'1':'0',bath:rules.some(r=>r.key==='bath')?'1':'0'};
+      const data=distanceRules.length?await api('/api/area-context?'+new URLSearchParams({...center,radius,...flags})):{errors:{},radiusKm:radius};if(request!==areaSearch.generation)return;
+      areaSearch.rows=points.map((point,index)=>({point,index,checks:[],complete:false}));
+      let next=0,done=0;const hazardCache=new Map();const hazards=rules.some(r=>r.key==='hazards');areaSearch.hazardPending=0;areaSearch.hazardChecked=0;areaSearch.hazardSkipped=0;
+      async function worker(){while(request===areaSearch.generation&&next<areaSearch.rows.length){const row=areaSearch.rows[next++];row.checks=areaPointChecks(row.point,distanceRules,data,center);
+        if(hazards){if(rules.filter(r=>r.priority==='must'&&r.key!=='hazards').every(r=>row.checks.some(c=>c.key===r.key&&c.state==='pass'))){++areaSearch.hazardPending;$('#areaStatus').textContent=areaStatusText('evaluate',done,points.length,areaSearch.hazardPending);try{const key=row.point.lat+','+row.point.lon;if(!hazardCache.has(key))hazardCache.set(key,api('/api/hazards?'+new URLSearchParams({lat:row.point.lat,lon:row.point.lon})));const h=await hazardCache.get(key);if(request!==areaSearch.generation)return;row.checks.push(areaHazardCheck(h))}catch(error){row.checks.push({key:'hazards',state:'unknown',text:'Kartlagene kunne ikke hentes'})}finally{if(request===areaSearch.generation){--areaSearch.hazardPending;++areaSearch.hazardChecked}}}else{++areaSearch.hazardSkipped;row.checks.push({key:'hazards',state:'unknown',text:'Ikke undersøkt fordi andre må-krav ikke er bekreftet'})}}
+        if(request!==areaSearch.generation)return;row.complete=true;++done;$('#areaProgress').value=20+80*done/points.length;$('#areaStatus').textContent=areaStatusText('evaluate',done,points.length,areaSearch.hazardPending);queueAreaMarker(row);if(done%100===0)await new Promise(resolve=>setTimeout(resolve,0));
+      }}
+      await Promise.all([worker(),worker()]);if(request!==areaSearch.generation)return;flushAreaMarkers();
+      const matches=areaSearch.rows.filter(row=>row.complete&&areaVerdict(row)==='pass').length,criteria=[...rules.map(rule=>areaLabels[rule.key])].join(', ');
+      $('#areaStatus').textContent=`Ferdig: ${matches} steder oppfyller valgene og vises på kartet. ${points.length} av ${sample.totalAddresses??points.length} adresser undersøkt rundt ${sample.locality} (${sample.scopeRadiusKm} km) · kontrollert: ${criteria}.${sample.complete?' Alle tilgjengelige adresser i søkeområdet er gjennomgått.':' Adresselisten er ufullstendig.'}`;
+    }catch(error){if(request!==areaSearch.generation)return;$('#areaStatus').textContent=error.message.includes('Fant ikke denne adressen')?'Oppdater serveren med Start app.cmd for å bruke områdesøket.':error.message}
+    finally{if(request===areaSearch.generation){areaBusy(false);renderAreaResults();if(areaSearch.active&&areaSearch.rows.some(r=>r.complete&&areaVerdict(r)==='pass'))$('#map').scrollIntoView({behavior:'smooth',block:'center'})}}
+  }
+  $('#areaView').addEventListener('click',showAreaSearch);$('#areaRun').addEventListener('click',runAreaSearch);$('#areaStop').addEventListener('click',stopAreaSearch);
+  function invalidateAreaSearch(){if(areaSearch.busy)stopAreaSearch();areaSearch.rows=[];clearAreaMarkers();$('#areaStatus').textContent='';}
+  $('#areaCriteria').addEventListener('change',()=>{invalidateAreaSearch();for(const key of areaKeys){const enabled=$('#areaEnable-'+key).checked;$('#areaPriority-'+key).disabled=!enabled;if(key!=='hazards')$('#areaRadius-'+key).disabled=!enabled}});
+  $('#areaCriteria').addEventListener('input',event=>{if(event.target.type==='number'){if(event.target.id.startsWith('areaRadius-')&&event.target.valueAsNumber>100)event.target.value='100';invalidateAreaSearch()}});
+  $('#areaMunicipality').addEventListener('change',()=>{invalidateAreaSearch();$('#areaLocality').value='';loadAreaPlaces()});$('#areaLocality').addEventListener('change',()=>{invalidateAreaSearch();const place=areaSearch.places?.get($('#areaLocality').value);if(place&&areaSearch.active)map.setView([place.lat,place.lon],12)});
+
+
+  initMap();window.addEventListener('resize',()=>{clampAreaDetails();if(map)setTimeout(()=>map.invalidateSize(),100)});
+  </script>
+</body></html>
